@@ -7,9 +7,9 @@ namespace ASSIGNMENT1
 {
     public class AIDetection : MonoBehaviour
     {
-        [SerializeField] int rays = 25;
+        [SerializeField] int rays = 35;
         [SerializeField] float rayOriginHeight = 1.5f;
-        [SerializeField] float rayEndHeight = 0.2f;
+        [SerializeField] float rayEndHeight = .2f;
         [SerializeField] float distanceRange = 7f;
         [SerializeField] float angleRange = 120f;
 
@@ -26,8 +26,7 @@ namespace ASSIGNMENT1
                 Vector3 rayRotation = transform.TransformDirection(localRayRotation);
                 Vector3 rayEndPosition = rayOrigin + rayRotation * distanceRange;
                 Debug.DrawLine(rayOrigin, rayEndPosition, Color.red);
-                RaycastHit hit;
-                if (Physics.Raycast(rayOrigin, rayRotation, out hit, distanceRange, collectableLayerMask))
+                if (Physics.Raycast(rayOrigin, rayRotation, out RaycastHit hit, distanceRange, collectableLayerMask))
                 {
                     Debug.DrawLine(rayOrigin, rayEndPosition, Color.green);
                 }

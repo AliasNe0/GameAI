@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7503365770807594185}
   - component: {fileID: 234606237786182098}
+  - component: {fileID: 2079898727389812892}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -45,11 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58d8cec3cb601a40aa78283641d592c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rays: 25
+  rays: 35
   rayOriginHeight: 1.5
   rayEndHeight: 0.2
   distanceRange: 7
   angleRange: 120
+--- !u!114 &2079898727389812892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503365770807594190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af1ca97dfc3bbc479f9dd8cb9b3626e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  baitDistance: 3
+  gizmoBaitHeight: 1.5
+  gizmoBaitRadius: 0.25
 --- !u!1 &8972857029472277109
 GameObject:
   m_ObjectHideFlags: 0
