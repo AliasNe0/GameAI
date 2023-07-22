@@ -15,14 +15,15 @@ namespace ASSIGNMENT1
 
         void FixedUpdate()
         {
-            Vector3 rayOrigin = transform.position + new Vector3(0, rayOriginHeight, 0);
+            Vector3 rayOrigin = transform.localPosition + new Vector3(0, rayOriginHeight, 0);
             float yRotationNormalized = (rayEndHeight - rayOriginHeight) / distanceRange;
             LayerMask collectableLayerMask = LayerMask.GetMask("Collectable");
             for (int i = 0; i <= rays; i++)
             {
-                float rayFactor = 2f * i / rays - 1f;
-                float rayAngle = angleRange * Mathf.Deg2Rad / 2 * rayFactor;
-                Vector3 rayRotation = Vector3.Normalize(new Vector3(Mathf.Sin(rayAngle), yRotationNormalized, Mathf.Cos(rayAngle)));
+                float angleClampFactor = 2f * i / rays - 1f;
+                float rayAngle = angleRange / 2 * angleClampFactor * Mathf.Deg2Rad;
+                Vector3 localRayRotation = Vector3.Normalize(new Vector3(Mathf.Sin(rayAngle), yRotationNormalized, Mathf.Cos(rayAngle)));
+                Vector3 rayRotation = transform.TransformDirection(localRayRotation);
                 Vector3 rayEndPosition = rayOrigin + rayRotation * distanceRange;
                 Debug.DrawLine(rayOrigin, rayEndPosition, Color.red);
                 RaycastHit hit;
