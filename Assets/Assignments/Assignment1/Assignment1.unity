@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 925105951}
   - component: {fileID: 925105950}
   - component: {fileID: 925105949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 1120964332}
   - component: {fileID: 1120964331}
   - component: {fileID: 1120964330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1449,6 +1449,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: speed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationRange
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationAngleRange
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationAngularSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7503365770807594185, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.39

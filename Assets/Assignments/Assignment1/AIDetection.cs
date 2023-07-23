@@ -13,11 +13,16 @@ namespace ASSIGNMENT1
         [SerializeField] float distanceRange = 7f;
         [SerializeField] float angleRange = 120f;
 
-        LayerMask collectableLayerMask;
+        int collectableLayer;
+        int obstacleLayer;
+
+        public bool obstacleOnLeft;
+        public bool obstacleOnRight;
 
         private void Awake()
         {
-            collectableLayerMask = LayerMask.GetMask("Collectable");
+            collectableLayer = LayerMask.NameToLayer("Collectable");
+            obstacleLayer = LayerMask.NameToLayer("Obstacle");
         }
 
         void FixedUpdate()
@@ -31,10 +36,17 @@ namespace ASSIGNMENT1
                 Vector3 localRayRotation = Vector3.Normalize(new Vector3(Mathf.Sin(rayAngle), yRotationNormalized, Mathf.Cos(rayAngle)));
                 Vector3 rayRotation = transform.TransformDirection(localRayRotation);
                 Vector3 rayEndPosition = rayOrigin + rayRotation * distanceRange;
-                Debug.DrawLine(rayOrigin, rayEndPosition, Color.red);
-                if (Physics.Raycast(rayOrigin, rayRotation, out RaycastHit hit, distanceRange, collectableLayerMask))
+                Debug.DrawLine(rayOrigin, rayEndPosition, Color.yellow);
+                if (Physics.Raycast(rayOrigin, rayRotation, out RaycastHit hit, distanceRange))
                 {
-                    Debug.DrawLine(rayOrigin, rayEndPosition, Color.green);
+                    if (hit.transform.gameObject.layer == collectableLayer)
+                    {
+                        Debug.DrawLine(rayOrigin, rayEndPosition, Color.green);
+                    }
+                    else if (hit.transform.gameObject.layer == obstacleLayer)
+                    {
+                        Debug.DrawLine(rayOrigin, rayEndPosition, Color.red);
+                    }
                 }
             }
         }
