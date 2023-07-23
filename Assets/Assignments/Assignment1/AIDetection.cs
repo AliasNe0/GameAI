@@ -13,11 +13,17 @@ namespace ASSIGNMENT1
         [SerializeField] float distanceRange = 7f;
         [SerializeField] float angleRange = 120f;
 
+        LayerMask collectableLayerMask;
+
+        private void Awake()
+        {
+            collectableLayerMask = LayerMask.GetMask("Collectable");
+        }
+
         void FixedUpdate()
         {
             Vector3 rayOrigin = transform.localPosition + new Vector3(0, rayOriginHeight, 0);
             float yRotationNormalized = (rayEndHeight - rayOriginHeight) / distanceRange;
-            LayerMask collectableLayerMask = LayerMask.GetMask("Collectable");
             for (int i = 0; i <= rays; i++)
             {
                 float angleClampFactor = 2f * i / rays - 1f;
