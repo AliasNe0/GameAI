@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ASSIGNMENT1;
-using UnityEngine.UIElements;
 
 namespace ASSIGNMENT1
 {
-    public class AISteering : MonoBehaviour
+    public class AISteeringState : AIState
     {
         [SerializeField] float speed = 1.5f;
         [SerializeField] float baitDistance = 3f;
@@ -24,18 +23,27 @@ namespace ASSIGNMENT1
         Vector3 direction;
         bool baitRotated;
         bool stop;
+        GameObject AIAgent;
 
-        private void Awake()
+        public AISteeringState(AIStateMachine sm) : base(sm) { }
+
+        public override void OnStart()
         {
-            bait = Instantiate(new GameObject("Bait"));
-            detection = GetComponent<AIDetection>();
+            bait = GameObject.Instantiate(new GameObject("Bait"));
+            detection = stateMachine.gameObject.GetComponent<AIDetection>();
             if (bait == null) return;
-            bait.transform.parent = transform;
+            AIAgent = stateMachine.gameObject;
+            bait.transform.parent = AIAgent.transform;
             baitRotated = true;
             stop = false;
         }
 
-        void FixedUpdate()
+        public override void OnDisable()
+        {
+            if (!baitRotated) stateMachine.StopCoroutine(RotateBait());
+        }
+
+        public override void OnFixedUpdate()
         {
             if (bait == null || detection == null) return;
             CompleteSteering();
@@ -53,8 +61,8 @@ namespace ASSIGNMENT1
             }
             if (baitRotated) UpdateRotationAngle();
             UpdateDirection();
-            if (!stop) transform.position += speed * Time.deltaTime * direction;
-            transform.rotation = Quaternion.LookRotation(direction);
+            if (!stop) AIAgent.transform.position += speed * Time.deltaTime * direction;
+            AIAgent.transform.rotation = Quaternion.LookRotation(direction);
         }
 
         void UpdateRotationAngle()
@@ -73,7 +81,7 @@ namespace ASSIGNMENT1
             }
             baitRotationAngle += Random.Range(baitRotationMinAngularSpeed, baitRotationMaxAngularSpeed) * baitRotationAngleSign;
             baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
-            StartCoroutine(RotateBait());
+            stateMachine.StartCoroutine(RotateBait());
         }
 
         IEnumerator RotateBait()
@@ -87,9 +95,9 @@ namespace ASSIGNMENT1
         void UpdateDirection()
         {
             localBaitRotation = Vector3.Normalize(new Vector3(Mathf.Sin(baitRotationAngle), 0, Mathf.Cos(baitRotationAngle))); ;
-            Vector3 baitRotation = transform.TransformDirection(localBaitRotation);
-            bait.transform.position = transform.position + baitRotation * baitDistance;
-            direction = Vector3.Normalize(bait.transform.position - transform.position);
+            Vector3 baitRotation = AIAgent.transform.TransformDirection(localBaitRotation);
+            bait.transform.position = AIAgent.transform.position + baitRotation * baitDistance;
+            direction = Vector3.Normalize(bait.transform.position - AIAgent.transform.position);
         }
     }
 }
