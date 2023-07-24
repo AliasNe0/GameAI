@@ -13,8 +13,8 @@ namespace ASSIGNMENT1
         [SerializeField] float rayEndHeight = .2f;
         [SerializeField] float distanceRange = 4f;
         [SerializeField] float angleRange = 120f;
-        [SerializeField] float obstacleDetectionDistance = 1.5f;
-        [SerializeField] float obstacleDetectionAngle = 60f;
+        [SerializeField] float obstacleDetectionDistance = 1f;
+        [SerializeField] float obstacleDetectionAngle = 45f;
 
         AIStateMachine stateMachine;
         GameObject rayOrigin;
@@ -22,10 +22,10 @@ namespace ASSIGNMENT1
         int obstacleLayer;
         List<int> sides = new() { 0, 1 };
 
-        public GameObject collectableToPickUp;
         public bool obstacleOnLeft = false;
         public bool obstacleOnRight = false;
         public float obstacleProximityFactor = 1f;
+        public GameObject collectableToPickUp;
 
         private void Awake()
         {
@@ -74,7 +74,7 @@ namespace ASSIGNMENT1
                     {
                         if (side == 0)
                         {
-                            if (!obstacleOnLeftSide && !obstacleOnRightSide)
+                            if (!obstacleOnLeftSide)
                             {
                                 obstacleOnLeftSide = true;
                                 Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.red);
@@ -82,18 +82,18 @@ namespace ASSIGNMENT1
                         }
                         else if (side == 1)
                         {
-                            if (!obstacleOnLeftSide && !obstacleOnRightSide)
+                            if (!obstacleOnRightSide)
                             {
                                 obstacleOnRightSide = true;
                                 Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.red);
                             }
                         }
 
-                        if (hit.distance > distanceToObstacle) distanceToObstacle = hit.distance;
+                        if (distanceToObstacle > hit.distance) distanceToObstacle = hit.distance;
                     }
                 }
             }
-            obstacleProximityFactor = Mathf.Pow(distanceToObstacle / obstacleDetectionDistance, 2) - 0.1f;
+            obstacleProximityFactor = Mathf.Clamp(-Mathf.Exp(-2f * distanceToObstacle / obstacleDetectionDistance + 1f) + 2.1f, 0, 1f);
             obstacleOnLeft = obstacleOnLeftSide;
             obstacleOnRight = obstacleOnRightSide;
         }
