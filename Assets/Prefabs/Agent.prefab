@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7503365770807594185}
-  - component: {fileID: 234606237786182098}
-  - component: {fileID: 2079898727389812892}
+  - component: {fileID: 4794292367718416212}
+  - component: {fileID: 9212823480148122117}
+  - component: {fileID: 5145504550181541062}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 5226687370032821327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &234606237786182098
+--- !u!114 &4794292367718416212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,9 +50,14 @@ MonoBehaviour:
   rays: 35
   rayOriginHeight: 1.5
   rayEndHeight: 0.2
-  distanceRange: 7
+  distanceRange: 4
   angleRange: 120
---- !u!114 &2079898727389812892
+  obstacleDetectionDistance: 1.5
+  obstacleDetectionAngle: 60
+  obstacleOnLeft: 0
+  obstacleOnRight: 0
+  obstacleProximityFactor: 1
+--- !u!114 &9212823480148122117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,13 +66,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 7503365770807594190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9af1ca97dfc3bbc479f9dd8cb9b3626e, type: 3}
+  m_Script: {fileID: 11500000, guid: ade51da519938c341904961c80a94ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1.5
   baitDistance: 3
-  gizmoBaitHeight: 1.5
-  gizmoBaitRadius: 0.25
+  baitRotationAngleRange: 90
+  baitRotationMinAngularSpeed: 0
+  baitRotationMaxAngularSpeed: 1
+  baitRotationMinDuration: 0.25
+  baitRotationMaxDuration: 0.5
+  collisionRotationAngularSpeed: 2
+  collisionRotationDuration: 0.25
+--- !u!114 &5145504550181541062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503365770807594190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93976b6fefc521f458322ed57852f3c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8972857029472277109
 GameObject:
   m_ObjectHideFlags: 0

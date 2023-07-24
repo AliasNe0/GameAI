@@ -13,8 +13,8 @@ namespace ASSIGNMENT1
         [SerializeField] float rayEndHeight = .2f;
         [SerializeField] float distanceRange = 4f;
         [SerializeField] float angleRange = 120f;
-        [SerializeField] float obstacleDetectionDistanceRange = 1.5f;
-        [SerializeField] float obstacleDetectionAngleRange = 90f;
+        [SerializeField] float obstacleDetectionDistance = 1.5f;
+        [SerializeField] float obstacleDetectionAngle = 60f;
 
         AIStateMachine stateMachine;
         GameObject rayOrigin;
@@ -23,8 +23,9 @@ namespace ASSIGNMENT1
         List<int> sides = new() { 0, 1 };
 
         public GameObject collectableToPickUp;
-        public bool obstacleOnLeft;
-        public bool obstacleOnRight;
+        public bool obstacleOnLeft = false;
+        public bool obstacleOnRight = false;
+        public float obstacleProximityFactor = 1f;
 
         private void Awake()
         {
@@ -33,21 +34,23 @@ namespace ASSIGNMENT1
             rayOrigin.transform.parent = transform;
             collectableLayer = LayerMask.NameToLayer("Collectable");
             obstacleLayer = LayerMask.NameToLayer("Obstacle");
-            obstacleOnLeft = false;
-            obstacleOnRight = false;
         }
 
         void FixedUpdate()
         {
+            if (rayOrigin == null) return;
             rayOrigin.transform.position = transform.localPosition + new Vector3(0, rayOriginHeight, 0);
             Vector3 rayOriginPosition = rayOrigin.transform.position;
             float yRotationNormalized = (rayEndHeight - rayOriginHeight) / distanceRange;
+            float distanceToObstacle = 0;
+            bool obstacleOnLeftSide = false;
+            bool obstacleOnRightSide = false;
             foreach (int side in sides)
             {
                 int raysOnSide = Mathf.RoundToInt(rays / 2);
                 for (float f = 0; f <= raysOnSide; f++)
                 {
-                    float angleClampFactor = f / raysOnSide;
+                    float angleClampFactor = 1f - f / raysOnSide;
                     float rayAngle = 0;
                     if (side == 0)
                     {
@@ -61,37 +64,38 @@ namespace ASSIGNMENT1
                     Vector3 gloablRayRotation = transform.TransformDirection(localRayRotation);
                     Vector3 rayEndPosition = rayOriginPosition + gloablRayRotation * distanceRange;
                     Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.yellow);
-                    if (Physics.Raycast(rayOriginPosition, gloablRayRotation, out RaycastHit hit, distanceRange))
+                    bool rayCast = Physics.Raycast(rayOriginPosition, gloablRayRotation, out RaycastHit hit, distanceRange);
+                    if (rayCast && hit.transform.gameObject.layer == collectableLayer)
                     {
-                        if (hit.transform.gameObject.layer == collectableLayer)
+                        Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.green);
+                        //collectableToPickUp = hit.transform.gameObject;
+                    }
+                    else if (rayCast && hit.transform.gameObject.layer == obstacleLayer && hit.distance <= obstacleDetectionDistance && Vector3.Angle(rayOrigin.transform.forward, gloablRayRotation) <= obstacleDetectionAngle / 2)
+                    {
+                        if (side == 0)
                         {
-                            Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.green);
-                            collectableToPickUp = hit.transform.gameObject;
-                            break;
-                        }
-                        else if (hit.transform.gameObject.layer == obstacleLayer && hit.distance <= obstacleDetectionDistanceRange && Vector3.Angle(rayOrigin.transform.forward, gloablRayRotation) <= obstacleDetectionAngleRange / 2)
-                        {
-                            if (side == 0)
+                            if (!obstacleOnLeftSide && !obstacleOnRightSide)
                             {
-                                obstacleOnLeft = true;
+                                obstacleOnLeftSide = true;
+                                Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.red);
                             }
-                            else if (side == 1)
-                            {
-                                obstacleOnRight = true;
-                            }
-                            Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.red);
-                            stateMachine.ChangeState(0);
-                            break;
                         }
-                        else
+                        else if (side == 1)
                         {
-                            obstacleOnLeft = false;
-                            obstacleOnRight = false;
-                            stateMachine.ChangeState(0);
+                            if (!obstacleOnLeftSide && !obstacleOnRightSide)
+                            {
+                                obstacleOnRightSide = true;
+                                Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.red);
+                            }
                         }
+
+                        if (hit.distance > distanceToObstacle) distanceToObstacle = hit.distance;
                     }
                 }
             }
+            obstacleProximityFactor = Mathf.Pow(distanceToObstacle / obstacleDetectionDistance, 2) - 0.1f;
+            obstacleOnLeft = obstacleOnLeftSide;
+            obstacleOnRight = obstacleOnRightSide;
         }
     }
 }
