@@ -38,7 +38,7 @@ namespace ASSIGNMENT1
             stop = false;
         }
 
-        public override void OnDisable()
+        public override void OnExit()
         {
             if (!baitRotated) stateMachine.StopCoroutine(RotateBait());
         }
@@ -67,7 +67,7 @@ namespace ASSIGNMENT1
 
         void UpdateRotationAngle()
         {
-            if (detection.obstacleOnLeft && !detection.obstacleOnRight)
+            if (detection.obstacleOnLeft)
             {
                 baitRotationAngleSign = 1f;
             }

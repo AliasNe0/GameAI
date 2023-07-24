@@ -352,6 +352,23 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &445455544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7503365770807594190, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+  m_PrefabInstance: {fileID: 7503365769002940525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &445455548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445455544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93976b6fefc521f458322ed57852f3c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,7 +1480,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: baitRotationAngleRange
-      value: 90
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationMaxDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      propertyPath: baitRotationMinDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: baitRotationAngularSpeed
@@ -1513,10 +1538,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agent
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2079898727389812892, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7503365770807594190, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 445455548}
   m_SourcePrefab: {fileID: 100100000, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
