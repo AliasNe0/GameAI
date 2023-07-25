@@ -7,15 +7,19 @@ namespace ASSIGNMENT1
 {
     public class AIStateMachine : MonoBehaviour
     {
-        protected AIState currentState;
+        AIState currentState;
         public List<AIState> States { get; private set; }
         public AIDetection Detection { get; private set; }
-        public AIPatrolling Patrolling { get; private set; }
+        public AIPatrolAction PatrolAction { get; private set; }
+        public AIChaseAction ChaseAction { get; private set; }
+        public AIIdleAction IdleAction { get; private set; }
 
         void Awake()
         {
             Detection = GetComponent<AIDetection>();
-            Patrolling = GetComponent<AIPatrolling>();
+            IdleAction = GetComponent<AIIdleAction>();
+            PatrolAction = GetComponent<AIPatrolAction>();
+            ChaseAction = GetComponent<AIChaseAction>();
         }
 
         public void ChangeToState(Type stateType)
@@ -35,12 +39,13 @@ namespace ASSIGNMENT1
 
         void CreateStates()
         {
-            States = new();
-            AIState idle = new AIIdleState(this);
-            States.Add(idle);
-            AIState patrolling = new AIPatrollingState(this);
-            States.Add(patrolling);
-            currentState = patrolling;
+            States = new()
+            {
+                new AIIdleState(this),
+                new AIPatrolState(this),
+                new AIChaseState(this)
+            };
+            currentState = States.Find(st => st.GetType() == typeof(AIPatrolState));
         }
 
         void Start()
@@ -68,7 +73,18 @@ namespace ASSIGNMENT1
 
         void Update()
         {
-            if (Detection.CollectableToPickUp) ChangeToState(typeof(AIIdleState));
+            if (Detection.CollectableToPickUp && currentState.GetType() != typeof(AIChaseState))
+            {
+                ChangeToState(typeof(AIChaseState));
+            }
+            else if (ChaseAction.TargetIsReached && currentState.GetType() == typeof(AIChaseState))
+            {
+                ChangeToState(typeof(AIIdleState));
+            }
+            //else if (!Detection.CollectableToPickUp && currentState.GetType() == typeof(AIChaseState))
+            //{
+            //    ChangeToState(typeof(AIPatrolState));
+            //}
             currentState.OnUpdate();
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ASSIGNMENT1
 {
-    public class AIPatrolling : MonoBehaviour
+    public class AIPatrolAction : MonoBehaviour
     {
         [SerializeField] float speed = 3f;
         [SerializeField] float baitDistance = 3f;
@@ -14,8 +14,8 @@ namespace ASSIGNMENT1
         [SerializeField] float baitRotationMaxDuration = .5f;
         [SerializeField] float collisionRotationAngularSpeed = 2f;
         [SerializeField] float collisionRotationDuration = .25f;
-        [SerializeField] float deeadEndRotationAngularSpeed = 4f;
-        [SerializeField] float deeadEndRotationDuration = .25f;
+        [SerializeField] float deeadEndRotationAngularSpeed = 8f;
+        [SerializeField] float deeadEndRotationDuration = .1f;
 
         GameObject bait;
         Vector3 baitRotation;
@@ -36,7 +36,7 @@ namespace ASSIGNMENT1
             bait.transform.parent = transform;
         }
 
-        public void CompleteSteering(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
+        public void Patrol(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
         {
             if (bait == null) InstantiateBait();
             if (baitRotatedFromDeadEnd && baitRotatedFromObstacle) CalculateRotationParameters(obstacleOnLeft, obstacleOnRight, obstacleProximityFactor);

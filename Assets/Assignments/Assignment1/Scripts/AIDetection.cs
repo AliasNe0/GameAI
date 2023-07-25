@@ -37,7 +37,6 @@ namespace ASSIGNMENT1
             ObstacleOnLeft = false;
             ObstacleOnRight = false;
             ObstacleProximityFactor = 1f;
-            CollectableToPickUp = null;
         }
 
         public void RunDetection()

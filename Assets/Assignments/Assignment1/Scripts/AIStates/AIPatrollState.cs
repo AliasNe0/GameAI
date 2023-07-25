@@ -4,22 +4,27 @@ using UnityEngine;
 
 namespace ASSIGNMENT1
 {
-    public class AIIdleState : AIState
+    public class AIPatrolState : AIState
     {
         AIDetection detection;
-        AIPatrolling patrolling;
+        AIPatrolAction patrolAction;
 
-        public AIIdleState(AIStateMachine sm) : base(sm) { }
+        public AIPatrolState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
             detection = stateMachine.Detection;
-            patrolling = stateMachine.Patrolling;
+            patrolAction = stateMachine.PatrolAction;
+        }
+
+        public override void OnEnter()
+        {
+            detection.OnDetectionEnable();
         }
 
         public override void OnExit()
         {
-
+            patrolAction.StopAllCoroutines();
         }
 
         public override void OnUpdate()
@@ -29,7 +34,7 @@ namespace ASSIGNMENT1
 
         public override void OnEnable()
         {
-
+ 
         }
 
         public override void OnDisable()
@@ -39,7 +44,8 @@ namespace ASSIGNMENT1
 
         public override void OnFixedUpdate()
         {
-
+            patrolAction.Patrol(detection.ObstacleOnLeft, detection.ObstacleOnRight, detection.ObstacleProximityFactor);
+            detection.RunDetection();
         }
 
         public override void OnLateUpdate()
