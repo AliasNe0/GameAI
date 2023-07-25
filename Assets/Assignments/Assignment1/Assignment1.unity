@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203768692136909178, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.51
+      value: -2.7
       objectReference: {fileID: 0}
     - target: {fileID: 9203768692136909178, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -213,7 +213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203768692136909178, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.95
+      value: 6.94
       objectReference: {fileID: 0}
     - target: {fileID: 9203768692136909178, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2075,22 +2075,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4794292367718416212, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: distanceRange
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4794292367718416212, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: obstacleDetectionAngle
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 4794292367718416212, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: obstacleDetectionDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193365197691364524, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: pickUpDuration
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7503365770807594185, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.39
@@ -2134,18 +2118,6 @@ PrefabInstance:
     - target: {fileID: 7503365770807594190, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: m_Name
       value: Agent
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212823480148122117, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: deeadEndRotationDuration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212823480148122117, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: deeadEndRotationAngularSpeed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212823480148122117, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
-      propertyPath: collisionRotationAngularSpeed
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
