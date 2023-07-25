@@ -2,42 +2,57 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ASSIGNMENT1;
 
 namespace ASSIGNMENT1
 {
     public class AIStateMachine : MonoBehaviour
     {
         protected AIState currentState;
-        public List<AIState> states = new();
+        public List<AIState> States { get; private set; }
+        public AIDetection Detection { get; private set; }
+        public AIPatrolling Patrolling { get; private set; }
 
-        public void ChangeState(int index)
+        void Awake()
         {
-            if (states.Count > index)
+            Detection = GetComponent<AIDetection>();
+            Patrolling = GetComponent<AIPatrolling>();
+        }
+
+        public void ChangeToState(Type stateType)
+        {
+            AIState newState = States.Find(st => st.GetType() == stateType);
+            if (newState == null)
+            {
+                Debug.Log("Cannot find state " + stateType);
+            }
+            else
             {
                 currentState.OnExit();
-                currentState = states[index];
+                currentState = newState;
                 currentState.OnEnter();
             }
         }
 
         void CreateStates()
         {
-            AIState steering = new AISteeringState(this);
-            currentState = steering;
-            states.Add(steering);
+            States = new();
+            AIState idle = new AIIdleState(this);
+            States.Add(idle);
+            AIState patrolling = new AIPatrollingState(this);
+            States.Add(patrolling);
+            currentState = patrolling;
         }
 
         void Start()
         {
             CreateStates();
 
-            if (states.Count == 0)
+            if (States.Count == 0)
             {
                 throw new ArgumentException("You did not specify any states. Create at least one state in CreateStates method.");
             }
 
-            foreach (AIState state in states)
+            foreach (AIState state in States)
             {
                 state.OnStart();
             }
@@ -45,7 +60,7 @@ namespace ASSIGNMENT1
             if (currentState == null)
             {
                 Debug.Log("Initial state not set. Defaulting to first state.");
-                currentState = states[0];
+                currentState = States[0];
             }
 
             currentState.OnEnter();
@@ -53,12 +68,13 @@ namespace ASSIGNMENT1
 
         void Update()
         {
+            if (Detection.CollectableToPickUp) ChangeToState(typeof(AIIdleState));
             currentState.OnUpdate();
         }
 
         void OnEnable()
         {
-            foreach (AIState state in states)
+            foreach (AIState state in States)
             {
                 state.OnEnable();
             }
@@ -66,7 +82,7 @@ namespace ASSIGNMENT1
 
         void OnDisable()
         {
-            foreach (AIState state in states)
+            foreach (AIState state in States)
             {
                 state.OnDisable();
             }

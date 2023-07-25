@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ASSIGNMENT1;
 
 namespace ASSIGNMENT1
 {

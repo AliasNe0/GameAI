@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ASSIGNMENT1;
 
 namespace ASSIGNMENT1
 {
-    public class AISteering : MonoBehaviour
+    public class AIPatrolling : MonoBehaviour
     {
         [SerializeField] float speed = 3f;
         [SerializeField] float baitDistance = 3f;
@@ -15,35 +14,40 @@ namespace ASSIGNMENT1
         [SerializeField] float baitRotationMaxDuration = .5f;
         [SerializeField] float collisionRotationAngularSpeed = 2f;
         [SerializeField] float collisionRotationDuration = .25f;
-        [SerializeField] float deeadEndRotationAngularSpeed = 2f;
-        [SerializeField] float deeadEndRotationDuration = 1f;
+        [SerializeField] float deeadEndRotationAngularSpeed = 4f;
+        [SerializeField] float deeadEndRotationDuration = .25f;
 
         GameObject bait;
         Vector3 baitRotation;
         float baitRotationAngle;
+        float speedReduction;
         bool baitRotated = true;
         bool baitRotatedFromObstacle = true;
         bool baitRotatedFromDeadEnd = true;
 
-        void Awake()
+        void InstantiateBait()
         {
             bait = Instantiate(new GameObject("Bait"));
-            if (bait == null) return;
+            if (bait == null)
+            {
+                Debug.Log("Bait is missing");
+                return;
+            }
             bait.transform.parent = transform;
         }
 
         public void CompleteSteering(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
         {
-            if (bait == null) return;
-            if (baitRotatedFromDeadEnd && baitRotatedFromObstacle) UpdateRotationAngle(obstacleOnLeft, obstacleOnRight);
-            if (baitRotatedFromDeadEnd && baitRotatedFromObstacle && !obstacleOnLeft && !obstacleOnRight) obstacleProximityFactor = 1f;
+            if (bait == null) InstantiateBait();
+            if (baitRotatedFromDeadEnd && baitRotatedFromObstacle) CalculateRotationParameters(obstacleOnLeft, obstacleOnRight, obstacleProximityFactor);
             Vector3 direction = GetDirection();
-            transform.position += speed * obstacleProximityFactor * Time.deltaTime * direction;
+            transform.position += speed * speedReduction * Time.deltaTime * direction;
             transform.rotation = Quaternion.LookRotation(direction);
         }
 
-        void UpdateRotationAngle(bool obstacleOnLeft, bool obstacleOnRight)
+        void CalculateRotationParameters(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
         {
+            speedReduction = 1f;
             if (obstacleOnRight || obstacleOnRight)
             {
                 if (!baitRotated) StopCoroutine(RotateBait());
@@ -54,12 +58,14 @@ namespace ASSIGNMENT1
                     float baitRotationAngleSign = randomInt == 1 ? 1f : -1f;
                     baitRotationAngle = deeadEndRotationAngularSpeed * baitRotationAngleSign;
                     baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                    speedReduction = Mathf.Clamp(-Mathf.Exp(-3f * obstacleProximityFactor + .8f) + 2f, 0, 1f);
                     StartCoroutine(RotateBaitFromDeadEnd());
                 }
                 else if (obstacleOnRight)
                 {
                     baitRotationAngle = -collisionRotationAngularSpeed;
                     baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                    speedReduction = Mathf.Clamp(-Mathf.Exp(-2f * obstacleProximityFactor + 1f) + 2.1f, 0, 1f);
                     StartCoroutine(RotateBaitFromObstacle());
                 }
                 else if (obstacleOnLeft)
