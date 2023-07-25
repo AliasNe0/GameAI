@@ -9,10 +9,10 @@ namespace ASSIGNMENT1
         [SerializeField] int rays = 35;
         [SerializeField] float rayOriginHeight = 1.5f;
         [SerializeField] float rayEndHeight = .2f;
-        [SerializeField] float distanceRange = 4f;
+        [SerializeField] float distanceRange = 3f;
         [SerializeField] float angleRange = 120f;
         [SerializeField] float obstacleDetectionDistance = 1f;
-        [SerializeField] float obstacleDetectionAngle = 45f;
+        [SerializeField] float obstacleDetectionAngle = 60f;
 
         GameObject rayOrigin;
         int collectableLayer;
@@ -21,7 +21,7 @@ namespace ASSIGNMENT1
 
         public bool ObstacleOnLeft { get; private set; }
         public bool ObstacleOnRight { get; private set; }
-        public float ObstacleProximityFactor { get; private set; }
+        public float DistanceToObstacle { get; private set; }
         public GameObject CollectableToPickUp { get; private set; }
 
         void Awake()
@@ -32,20 +32,13 @@ namespace ASSIGNMENT1
             obstacleLayer = LayerMask.NameToLayer("Obstacle");
         }
 
-        public void OnDetectionEnable()
-        {
-            ObstacleOnLeft = false;
-            ObstacleOnRight = false;
-            ObstacleProximityFactor = 1f;
-        }
-
         public void RunDetection()
         {
             if (rayOrigin == null) return;
             rayOrigin.transform.position = transform.localPosition + new Vector3(0, rayOriginHeight, 0);
             Vector3 rayOriginPosition = rayOrigin.transform.position;
             float yRotationNormalized = (rayEndHeight - rayOriginHeight) / distanceRange;
-            float distanceToObstacle = 0;
+            float distanceToObstacle = obstacleDetectionDistance;
             bool obstacleOnLeftSide = false;
             bool obstacleOnRightSide = false;
             foreach (int side in sides)
@@ -64,7 +57,7 @@ namespace ASSIGNMENT1
                     {
                         if (hit.transform.gameObject.layer == collectableLayer)
                         {
-                            Debug.DrawLine(rayOriginPosition, rayEndPosition, Color.green);
+                            Debug.DrawLine(rayOriginPosition, hit.point, Color.green);
                             CollectableToPickUp = hit.transform.gameObject;
                         }
                         if (hit.transform.gameObject.layer == obstacleLayer && hit.distance <= obstacleDetectionDistance && rayAngle <= obstacleDetectionAngle / 2)
@@ -89,7 +82,7 @@ namespace ASSIGNMENT1
                     }
                 }
             }
-            ObstacleProximityFactor = Mathf.Clamp(distanceToObstacle / obstacleDetectionDistance, 0, 1f);
+            DistanceToObstacle = distanceToObstacle;
             ObstacleOnLeft = obstacleOnLeftSide;
             ObstacleOnRight = obstacleOnRightSide;
         }

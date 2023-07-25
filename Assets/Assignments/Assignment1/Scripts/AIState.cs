@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ASSIGNMENT1
 {
-    public class AIState
+    public abstract class AIState
     {
         protected AIStateMachine stateMachine;
 
@@ -15,13 +15,10 @@ namespace ASSIGNMENT1
             stateMachine = sm;
         }
 
-        public virtual void OnStart() { }
-        public virtual void OnEnter() { }
-        public virtual void OnExit() { }
-        public virtual void OnUpdate() { }
-        public virtual void OnEnable() { }
-        public virtual void OnDisable() { }
-        public virtual void OnFixedUpdate() { }
-        public virtual void OnLateUpdate() { }
+        public abstract void OnStart();
+        public abstract void OnEnter();
+        public abstract void OnExit();
+        public abstract void OnUpdate();
+        public abstract void OnFixedUpdate();
     }
 }

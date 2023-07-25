@@ -12,14 +12,16 @@ namespace ASSIGNMENT1
         public AIDetection Detection { get; private set; }
         public AIPatrolAction PatrolAction { get; private set; }
         public AIChaseAction ChaseAction { get; private set; }
+        public AIPickUpAction PickUpAction { get; private set; }
         public AIIdleAction IdleAction { get; private set; }
 
         void Awake()
         {
             Detection = GetComponent<AIDetection>();
-            IdleAction = GetComponent<AIIdleAction>();
             PatrolAction = GetComponent<AIPatrolAction>();
             ChaseAction = GetComponent<AIChaseAction>();
+            PickUpAction = GetComponent<AIPickUpAction>();
+            IdleAction = GetComponent<AIIdleAction>();
         }
 
         public void ChangeToState(Type stateType)
@@ -41,9 +43,10 @@ namespace ASSIGNMENT1
         {
             States = new()
             {
-                new AIIdleState(this),
                 new AIPatrolState(this),
-                new AIChaseState(this)
+                new AIChaseState(this),
+                new AIPickUpState(this),
+                new AIIdleState(this)
             };
             currentState = States.Find(st => st.GetType() == typeof(AIPatrolState));
         }
@@ -67,8 +70,6 @@ namespace ASSIGNMENT1
                 Debug.Log("Initial state not set. Defaulting to first state.");
                 currentState = States[0];
             }
-
-            currentState.OnEnter();
         }
 
         void Update()
@@ -79,39 +80,22 @@ namespace ASSIGNMENT1
             }
             else if (ChaseAction.TargetIsReached && currentState.GetType() == typeof(AIChaseState))
             {
+                ChangeToState(typeof(AIPickUpState));
+            }
+            else if (!Detection.CollectableToPickUp && currentState.GetType() == typeof(AIPickUpState))
+            {
                 ChangeToState(typeof(AIIdleState));
             }
-            //else if (!Detection.CollectableToPickUp && currentState.GetType() == typeof(AIChaseState))
-            //{
-            //    ChangeToState(typeof(AIPatrolState));
-            //}
+            else if (IdleAction.readyToPatrol && currentState.GetType() == typeof(AIIdleState))
+            {
+                ChangeToState(typeof(AIPatrolState));
+            }
             currentState.OnUpdate();
-        }
-
-        void OnEnable()
-        {
-            foreach (AIState state in States)
-            {
-                state.OnEnable();
-            }
-        }
-
-        void OnDisable()
-        {
-            foreach (AIState state in States)
-            {
-                state.OnDisable();
-            }
         }
 
         void FixedUpdate()
         {
             currentState.OnFixedUpdate();
-        }
-
-        void LateUpdate()
-        {
-            currentState.OnLateUpdate();
         }
     }
 }

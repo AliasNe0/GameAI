@@ -19,12 +19,12 @@ namespace ASSIGNMENT1
 
         public override void OnEnter()
         {
-            detection.OnDetectionEnable();
+
         }
 
         public override void OnExit()
         {
-            patrolAction.StopAllCoroutines();
+            patrolAction.ResetPatrol();
         }
 
         public override void OnUpdate()
@@ -32,25 +32,10 @@ namespace ASSIGNMENT1
 
         }
 
-        public override void OnEnable()
-        {
- 
-        }
-
-        public override void OnDisable()
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
-            patrolAction.Patrol(detection.ObstacleOnLeft, detection.ObstacleOnRight, detection.ObstacleProximityFactor);
             detection.RunDetection();
-        }
-
-        public override void OnLateUpdate()
-        {
-
+            patrolAction.Patrol(detection.ObstacleOnLeft, detection.ObstacleOnRight, detection.DistanceToObstacle);
         }
     }
 }

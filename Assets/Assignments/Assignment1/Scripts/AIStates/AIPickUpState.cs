@@ -1,30 +1,31 @@
+using ASSIGNMENT1;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ASSIGNMENT1
 {
-    public class AIChaseState : AIState
+    public class AIPickUpState : AIState
     {
         AIDetection detection;
-        AIChaseAction chaseAction;
+        AIPickUpAction pickUpAction;
 
-        public AIChaseState(AIStateMachine sm) : base(sm) { }
+        public AIPickUpState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
             detection = stateMachine.Detection;
-            chaseAction = stateMachine.ChaseAction;
+            pickUpAction = stateMachine.PickUpAction;
         }
 
         public override void OnEnter()
         {
-
+            pickUpAction.PickUp(detection.CollectableToPickUp);
         }
 
         public override void OnExit()
         {
-            chaseAction.ResetChase();
+            pickUpAction.StopAllCoroutines();
         }
 
         public override void OnUpdate()
@@ -34,7 +35,7 @@ namespace ASSIGNMENT1
 
         public override void OnFixedUpdate()
         {
-            chaseAction.Chase(detection.CollectableToPickUp);
+            detection.RunDetection();
         }
     }
 }

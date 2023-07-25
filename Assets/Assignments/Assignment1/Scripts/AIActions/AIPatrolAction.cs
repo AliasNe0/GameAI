@@ -12,15 +12,15 @@ namespace ASSIGNMENT1
         [SerializeField] float baitRotationMaxAngularSpeed = 1f;
         [SerializeField] float baitRotationMinDuration = .25f;
         [SerializeField] float baitRotationMaxDuration = .5f;
-        [SerializeField] float collisionRotationAngularSpeed = 2f;
+        [SerializeField] float collisionRotationAngularSpeed = 1f;
         [SerializeField] float collisionRotationDuration = .25f;
-        [SerializeField] float deeadEndRotationAngularSpeed = 8f;
-        [SerializeField] float deeadEndRotationDuration = .1f;
+        [SerializeField] float deeadEndRotationAngularSpeed = 6f;
+        [SerializeField] float deeadEndRotationDuration = .5f;
+        [SerializeField] float maxProximityToObstacle = 2f;
 
         GameObject bait;
         Vector3 baitRotation;
         float baitRotationAngle;
-        float speedReduction;
         bool baitRotated = true;
         bool baitRotatedFromObstacle = true;
         bool baitRotatedFromDeadEnd = true;
@@ -36,36 +36,53 @@ namespace ASSIGNMENT1
             bait.transform.parent = transform;
         }
 
-        public void Patrol(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
+        public void ResetPatrol()
+        {
+            StopAllCoroutines();
+            if (bait == null) return;
+            Destroy(bait);
+            bait = null;
+            baitRotated = true;
+            baitRotatedFromObstacle = true;
+            baitRotatedFromDeadEnd = true;
+        }
+
+        public void Patrol(bool obstacleOnLeft, bool obstacleOnRight, float distanceToObstacle)
         {
             if (bait == null) InstantiateBait();
-            if (baitRotatedFromDeadEnd && baitRotatedFromObstacle) CalculateRotationParameters(obstacleOnLeft, obstacleOnRight, obstacleProximityFactor);
+            if (baitRotatedFromDeadEnd && baitRotatedFromObstacle) CalculateRotationParameters(obstacleOnLeft, obstacleOnRight);
             Vector3 direction = GetDirection();
+            float speedReduction = Mathf.Clamp(-Mathf.Exp(-15f * distanceToObstacle / maxProximityToObstacle + 3f) + 1f, 0, 1f);
             transform.position += speed * speedReduction * Time.deltaTime * direction;
             transform.rotation = Quaternion.LookRotation(direction);
         }
 
-        void CalculateRotationParameters(bool obstacleOnLeft, bool obstacleOnRight, float obstacleProximityFactor)
+        void CalculateRotationParameters(bool obstacleOnLeft, bool obstacleOnRight)
         {
-            speedReduction = 1f;
             if (obstacleOnRight || obstacleOnRight)
             {
-                if (!baitRotated) StopCoroutine(RotateBait());
+                if (!baitRotated)
+                {
+                    StopCoroutine(RotateBait());
+                    baitRotated = true;
+                }
                 if (obstacleOnRight && obstacleOnRight)
                 {
-                    if (!baitRotatedFromObstacle) StopCoroutine(RotateBaitFromObstacle());
+                    if (!baitRotatedFromObstacle)
+                    {
+                        StopCoroutine(RotateBaitFromObstacle());
+                        baitRotatedFromObstacle = true;
+                    }
                     int randomInt = Mathf.RoundToInt(Random.Range(0, 1f));
                     float baitRotationAngleSign = randomInt == 1 ? 1f : -1f;
                     baitRotationAngle = deeadEndRotationAngularSpeed * baitRotationAngleSign;
                     baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
-                    speedReduction = Mathf.Clamp(-Mathf.Exp(-3f * obstacleProximityFactor + .8f) + 2f, 0, 1f);
                     StartCoroutine(RotateBaitFromDeadEnd());
                 }
                 else if (obstacleOnRight)
                 {
                     baitRotationAngle = -collisionRotationAngularSpeed;
                     baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
-                    speedReduction = Mathf.Clamp(-Mathf.Exp(-2f * obstacleProximityFactor + 1f) + 2.1f, 0, 1f);
                     StartCoroutine(RotateBaitFromObstacle());
                 }
                 else if (obstacleOnLeft)
