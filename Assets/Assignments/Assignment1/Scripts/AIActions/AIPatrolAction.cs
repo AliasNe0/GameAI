@@ -14,7 +14,7 @@ namespace ASSIGNMENT1
         [SerializeField] float baitRotationMaxDuration = .5f;
         [SerializeField] float collisionRotationAngularSpeed = 1f;
         [SerializeField] float collisionRotationDuration = .25f;
-        [SerializeField] float deeadEndRotationAngularSpeed = 6f;
+        [SerializeField] float deeadEndRotationAngularSpeed = 4f;
         [SerializeField] float deeadEndRotationDuration = .5f;
         [SerializeField] float maxProximityToObstacle = 2f;
 

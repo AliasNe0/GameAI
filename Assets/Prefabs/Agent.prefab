@@ -56,7 +56,7 @@ MonoBehaviour:
   distanceRange: 3
   angleRange: 120
   obstacleDetectionDistance: 1
-  obstacleDetectionAngle: 60
+  obstacleDetectionAngle: 45
 --- !u!114 &5145504550181541062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   baitRotationMaxDuration: 0.5
   collisionRotationAngularSpeed: 1
   collisionRotationDuration: 0.25
-  deeadEndRotationAngularSpeed: 6
+  deeadEndRotationAngularSpeed: 4
   deeadEndRotationDuration: 0.5
   maxProximityToObstacle: 2
 --- !u!114 &4000502627621258600

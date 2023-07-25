@@ -12,7 +12,7 @@ namespace ASSIGNMENT1
         [SerializeField] float distanceRange = 3f;
         [SerializeField] float angleRange = 120f;
         [SerializeField] float obstacleDetectionDistance = 1f;
-        [SerializeField] float obstacleDetectionAngle = 60f;
+        [SerializeField] float obstacleDetectionAngle = 45f;
 
         GameObject rayOrigin;
         int collectableLayer;
