@@ -29,7 +29,7 @@ namespace ASSIGNMENT2
 
         public override void OnUpdate()
         {
-            pickUpAction.PickUp(detection.CollectableToPickUp);
+            if (detection.CollectableToPickUp) pickUpAction.PickUp(detection.CollectableToPickUp);
         }
 
         public override void OnFixedUpdate()

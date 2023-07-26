@@ -11,7 +11,6 @@ namespace ASSIGNMENT1
 
         public void ResetIdle()
         {
-            StopAllCoroutines();
             IdleFinished = false;
         }
 

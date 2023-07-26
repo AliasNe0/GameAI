@@ -19,12 +19,12 @@ namespace ASSIGNMENT1
 
         public override void OnEnter()
         {
-
+            chaseAction.ResetChase();
         }
 
         public override void OnExit()
         {
-            chaseAction.ResetChase();
+
         }
 
         public override void OnUpdate()

@@ -1,33 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace ASSIGNMENT2
 {
     public class AIChaseAction : MonoBehaviour
     {
-        [SerializeField] float speed = 3f;
         [SerializeField] float stopChaseAtDistance = 1f;
-        [SerializeField] float rotationSpeed = .1f;
-        public bool TargetIsReached { get; private set; }
+        public bool Active { get; private set; }
 
-        public void ResetChase()
+        public void ResetChase(NavMeshAgent navigation)
         {
-            TargetIsReached = false;
+            Active = true;
+            navigation.isStopped = true;
         }
-        public void Chase(GameObject target)
+        public void Chase(GameObject target, NavMeshAgent navigation)
         {
-            if (target == null) Debug.Log("No target!");
+            if (navigation.isStopped && target)
+            {
+                navigation.SetDestination(target.transform.position);
+                navigation.isStopped = false;
+            }
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
             if (distanceToTarget <= stopChaseAtDistance)
             {
-                TargetIsReached = true;
-                return;
+                Active = false;
+                navigation.isStopped = true;
             }
-            Vector3 direction = transform.forward + rotationSpeed * Vector3.Normalize(target.transform.position - transform.position);
-            direction = Vector3.Normalize(new Vector3(direction.x, 0, direction.z));
-            transform.position += speed * Time.deltaTime * direction;
-            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

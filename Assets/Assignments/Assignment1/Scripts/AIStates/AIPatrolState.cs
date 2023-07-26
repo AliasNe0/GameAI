@@ -19,12 +19,12 @@ namespace ASSIGNMENT1
 
         public override void OnEnter()
         {
-
+            patrolAction.ResetPatrol();
         }
 
         public override void OnExit()
         {
-            patrolAction.ResetPatrol();
+            patrolAction.StopAllCoroutines();
         }
 
         public override void OnUpdate()

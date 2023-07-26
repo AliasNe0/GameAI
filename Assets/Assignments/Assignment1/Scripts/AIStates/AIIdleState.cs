@@ -23,7 +23,7 @@ namespace ASSIGNMENT1
 
         public override void OnExit()
         {
-
+            idleAction.StopAllCoroutines();
         }
 
         public override void OnUpdate()

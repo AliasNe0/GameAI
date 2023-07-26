@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace ASSIGNMENT2
 {
     public class AIChaseState : AIState
     {
+        NavMeshAgent navigation;
         AIDetection detection;
         AIChaseAction chaseAction;
 
@@ -13,18 +16,19 @@ namespace ASSIGNMENT2
 
         public override void OnStart()
         {
+            navigation = stateMachine.Navigation;
             detection = stateMachine.Detection;
             chaseAction = stateMachine.ChaseAction;
         }
 
         public override void OnEnter()
         {
-
+            chaseAction.ResetChase(navigation);
         }
 
         public override void OnExit()
         {
-            chaseAction.ResetChase();
+
         }
 
         public override void OnUpdate()
@@ -34,7 +38,7 @@ namespace ASSIGNMENT2
 
         public override void OnFixedUpdate()
         {
-            chaseAction.Chase(detection.CollectableToPickUp);
+            if (detection.CollectableToPickUp) chaseAction.Chase(detection.CollectableToPickUp, navigation);
         }
     }
 }
