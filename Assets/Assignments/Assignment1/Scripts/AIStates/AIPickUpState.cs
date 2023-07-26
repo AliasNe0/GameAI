@@ -35,7 +35,7 @@ namespace ASSIGNMENT1
 
         public override void OnFixedUpdate()
         {
-            detection.RunDetection();
+
         }
     }
 }

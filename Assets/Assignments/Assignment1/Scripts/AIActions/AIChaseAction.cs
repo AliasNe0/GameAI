@@ -8,6 +8,7 @@ namespace ASSIGNMENT1
     {
         [SerializeField] float speed = 3f;
         [SerializeField] float stopChaseAtDistance = 1f;
+        [SerializeField] float rotationSpeed = .1f;
         public bool TargetIsReached { get; private set; }
 
         public void ResetChase()
@@ -23,7 +24,7 @@ namespace ASSIGNMENT1
                 TargetIsReached = true;
                 return;
             }
-            Vector3 direction = transform.forward + .05f * (target.transform.position - transform.position);
+            Vector3 direction = transform.forward + rotationSpeed * Vector3.Normalize(target.transform.position - transform.position);
             direction = Vector3.Normalize(new Vector3(direction.x, 0, direction.z));
             transform.position += speed * Time.deltaTime * direction;
             transform.rotation = Quaternion.LookRotation(direction);

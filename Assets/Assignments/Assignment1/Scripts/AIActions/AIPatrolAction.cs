@@ -124,7 +124,7 @@ namespace ASSIGNMENT1
 
         Vector3 GetDirection()
         {
-            Vector3 localBaitRotation = Vector3.Normalize(new Vector3(Mathf.Sin(baitRotationAngle), 0, Mathf.Cos(baitRotationAngle))); ;
+            Vector3 localBaitRotation = Vector3.Normalize(new Vector3(Mathf.Sin(baitRotationAngle), 0, Mathf.Cos(baitRotationAngle)));
             baitRotation = transform.TransformDirection(localBaitRotation);
             bait.transform.position = transform.position + baitRotation * baitDistance;
             return Vector3.Normalize(bait.transform.position - transform.position);
