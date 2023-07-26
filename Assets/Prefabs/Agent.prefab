@@ -9,12 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7503365770807594185}
-  - component: {fileID: 4794292367718416212}
-  - component: {fileID: 5145504550181541062}
-  - component: {fileID: 9212823480148122117}
-  - component: {fileID: 4000502627621258600}
-  - component: {fileID: 6193365197691364524}
-  - component: {fileID: 5763628259784841913}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -38,101 +32,6 @@ Transform:
   - {fileID: 5226687370032821327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4794292367718416212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58d8cec3cb601a40aa78283641d592c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rays: 35
-  rayOriginHeight: 1.5
-  rayEndHeight: 0.2
-  distanceRange: 3
-  angleRange: 120
-  obstacleDetectionDistance: 1
-  obstacleDetectionAngle: 45
---- !u!114 &5145504550181541062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93976b6fefc521f458322ed57852f3c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9212823480148122117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade51da519938c341904961c80a94ddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  baitDistance: 3
-  patrolRotationAngleRange: 90
-  patrolRotationMaxSpeed: 1
-  patrolRotationMinDuration: 0.25
-  patrolRotationMaxDuration: 0.5
-  collisionRotationSpeed: 1
-  collisionRotationDuration: 0.25
-  deadEndRotationSpeed: 4
-  deadEndRotationDuration: 0.5
-  maxProximityToObstacle: 2
---- !u!114 &4000502627621258600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfd1b35deced59f49b481a42c4a30c9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  stopChaseAtDistance: 1
-  rotationSpeed: 0.1
---- !u!114 &6193365197691364524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889ad05c689dee34fbdfcca3603b48ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUpDuration: 0.5
---- !u!114 &5763628259784841913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503365770807594190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23dc59c0b590a2d47a5241ba2095ae58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleDuration: 2
 --- !u!1 &8972857029472277109
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +233,7 @@ Animator:
   m_GameObject: {fileID: 5928759979769141154}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ea0ff3576510a4d49bfa126d68bf34bb, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
