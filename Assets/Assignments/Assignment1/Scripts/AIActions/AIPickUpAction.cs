@@ -7,13 +7,13 @@ namespace ASSIGNMENT1
     public class AIPickUpAction : MonoBehaviour
     {
         [SerializeField] float pickUpDuration = .5f;
-        public bool PickedUp {  get; private set; }
+        public bool Active { get; private set; }
         float duration;
         float timer;
 
         public void ResetPickUp()
         {
-            PickedUp = false;
+            Active = true;
             duration = pickUpDuration;
             timer = 0f;
         }
@@ -27,7 +27,7 @@ namespace ASSIGNMENT1
             else
             {
                 Destroy(collectable);
-                PickedUp = true;
+                Active = false;
             }
         }
     }

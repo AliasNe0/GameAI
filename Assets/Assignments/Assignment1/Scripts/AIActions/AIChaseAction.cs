@@ -7,13 +7,13 @@ namespace ASSIGNMENT1
     public class AIChaseAction : MonoBehaviour
     {
         [SerializeField] float speed = 3f;
-        [SerializeField] float stopChaseAtDistance = 1f;
+        [SerializeField] float stopChaseAtDistance = 1.5f;
         [SerializeField] float rotationSpeed = .1f;
-        public bool TargetIsReached { get; private set; }
+        public bool Active { get; private set; }
 
         public void ResetChase()
         {
-            TargetIsReached = false;
+            Active = true;
         }
         public void Chase(GameObject target)
         {
@@ -21,7 +21,7 @@ namespace ASSIGNMENT1
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
             if (distanceToTarget <= stopChaseAtDistance)
             {
-                TargetIsReached = true;
+                Active = false;
                 return;
             }
             Vector3 direction = transform.forward + rotationSpeed * Vector3.Normalize(target.transform.position - transform.position);
