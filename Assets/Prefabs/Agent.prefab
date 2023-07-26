@@ -83,14 +83,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   baitDistance: 3
-  baitRotationAngleRange: 90
-  baitRotationMaxAngularSpeed: 1
-  baitRotationMinDuration: 0.25
-  baitRotationMaxDuration: 0.5
-  collisionRotationAngularSpeed: 1
+  patrolRotationAngleRange: 90
+  patrolRotationMaxSpeed: 1
+  patrolRotationMinDuration: 0.25
+  patrolRotationMaxDuration: 0.5
+  collisionRotationSpeed: 1
   collisionRotationDuration: 0.25
-  deeadEndRotationAngularSpeed: 4
-  deeadEndRotationDuration: 0.5
+  deadEndRotationSpeed: 4
+  deadEndRotationDuration: 0.5
   maxProximityToObstacle: 2
 --- !u!114 &4000502627621258600
 MonoBehaviour:
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   stopChaseAtDistance: 1
+  rotationSpeed: 0.1
 --- !u!114 &6193365197691364524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889ad05c689dee34fbdfcca3603b48ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUpDuration: 5
+  pickUpDuration: 2
 --- !u!114 &5763628259784841913
 MonoBehaviour:
   m_ObjectHideFlags: 0

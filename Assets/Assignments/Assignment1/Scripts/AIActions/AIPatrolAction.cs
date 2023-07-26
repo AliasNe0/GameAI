@@ -8,14 +8,14 @@ namespace ASSIGNMENT1
     {
         [SerializeField] float speed = 3f;
         [SerializeField] float baitDistance = 3f;
-        [SerializeField] float baitRotationAngleRange = 90f;
-        [SerializeField] float baitRotationMaxAngularSpeed = 1f;
-        [SerializeField] float baitRotationMinDuration = .25f;
-        [SerializeField] float baitRotationMaxDuration = .5f;
-        [SerializeField] float collisionRotationAngularSpeed = 1f;
+        [SerializeField] float patrolRotationAngleRange = 90f;
+        [SerializeField] float patrolRotationMaxSpeed = 1f;
+        [SerializeField] float patrolRotationMinDuration = .25f;
+        [SerializeField] float patrolRotationMaxDuration = .5f;
+        [SerializeField] float collisionRotationSpeed = 1f;
         [SerializeField] float collisionRotationDuration = .25f;
-        [SerializeField] float deeadEndRotationAngularSpeed = 4f;
-        [SerializeField] float deeadEndRotationDuration = .5f;
+        [SerializeField] float deadEndRotationSpeed = 4f;
+        [SerializeField] float deadEndRotationDuration = .5f;
         [SerializeField] float maxProximityToObstacle = 2f;
 
         GameObject bait;
@@ -75,20 +75,20 @@ namespace ASSIGNMENT1
                     }
                     int randomInt = Mathf.RoundToInt(Random.Range(0, 1f));
                     float baitRotationAngleSign = randomInt == 1 ? 1f : -1f;
-                    baitRotationAngle = deeadEndRotationAngularSpeed * baitRotationAngleSign;
-                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                    baitRotationAngle = deadEndRotationSpeed * baitRotationAngleSign;
+                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -patrolRotationAngleRange / 2, patrolRotationAngleRange / 2) * Mathf.Deg2Rad;
                     StartCoroutine(RotateBaitFromDeadEnd());
                 }
                 else if (obstacleOnRight)
                 {
-                    baitRotationAngle = -collisionRotationAngularSpeed;
-                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                    baitRotationAngle = -collisionRotationSpeed;
+                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -patrolRotationAngleRange / 2, patrolRotationAngleRange / 2) * Mathf.Deg2Rad;
                     StartCoroutine(RotateBaitFromObstacle());
                 }
                 else if (obstacleOnLeft)
                 {
-                    baitRotationAngle = collisionRotationAngularSpeed;
-                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                    baitRotationAngle = collisionRotationSpeed;
+                    baitRotationAngle = Mathf.Clamp(baitRotationAngle, -patrolRotationAngleRange / 2, patrolRotationAngleRange / 2) * Mathf.Deg2Rad;
                     StartCoroutine(RotateBaitFromObstacle());
                 }
 
@@ -96,8 +96,8 @@ namespace ASSIGNMENT1
             else if (baitRotated)
             {
                 float baitRotationAngleFactor = 2 * Random.Range(0, 2) - 1f;
-                baitRotationAngle = baitRotationMaxAngularSpeed * baitRotationAngleFactor;
-                baitRotationAngle = Mathf.Clamp(baitRotationAngle, -baitRotationAngleRange / 2, baitRotationAngleRange / 2) * Mathf.Deg2Rad;
+                baitRotationAngle = patrolRotationMaxSpeed * baitRotationAngleFactor;
+                baitRotationAngle = Mathf.Clamp(baitRotationAngle, -patrolRotationAngleRange / 2, patrolRotationAngleRange / 2) * Mathf.Deg2Rad;
                 StartCoroutine(RotateBait());
             }
         }
@@ -105,7 +105,7 @@ namespace ASSIGNMENT1
         IEnumerator RotateBait()
         {
             baitRotated = false;
-            float duration = Random.Range(baitRotationMinDuration, baitRotationMaxDuration);
+            float duration = Random.Range(patrolRotationMinDuration, patrolRotationMaxDuration);
             yield return new WaitForSeconds(duration);
             baitRotated = true;
         }
@@ -118,7 +118,7 @@ namespace ASSIGNMENT1
         IEnumerator RotateBaitFromDeadEnd()
         {
             baitRotatedFromDeadEnd = false;
-            yield return new WaitForSeconds(deeadEndRotationDuration);
+            yield return new WaitForSeconds(deadEndRotationDuration);
             baitRotatedFromDeadEnd = true;
         }
 
