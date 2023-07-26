@@ -7,22 +7,23 @@ namespace ASSIGNMENT1
     public class AIIdleAction : MonoBehaviour
     {
         [SerializeField] float idleDuration = 2f;
-        public bool readyToPatrol { get; private set; }
+        public bool ReadyToPatrol { get; private set; }
 
         public void ResetIdle()
         {
-            readyToPatrol = false;
+            StopAllCoroutines();
+            ReadyToPatrol = false;
         }
 
         public void Idle()
         {
-            StartCoroutine(SuspendIdle());
+            if (!ReadyToPatrol) StartCoroutine(SuspendIdle());
         }
 
         IEnumerator SuspendIdle()
         {
             yield return new WaitForSeconds(idleDuration);
-            readyToPatrol = true;
+            ReadyToPatrol = true;
         }
     }
 }

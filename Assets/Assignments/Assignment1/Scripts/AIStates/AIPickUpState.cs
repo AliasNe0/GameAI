@@ -20,7 +20,7 @@ namespace ASSIGNMENT1
 
         public override void OnEnter()
         {
-            pickUpAction.PickUp(detection.CollectableToPickUp);
+            pickUpAction.ResetPickUp();
         }
 
         public override void OnExit()
@@ -30,7 +30,7 @@ namespace ASSIGNMENT1
 
         public override void OnUpdate()
         {
-
+            pickUpAction.PickUp(detection.CollectableToPickUp);
         }
 
         public override void OnFixedUpdate()

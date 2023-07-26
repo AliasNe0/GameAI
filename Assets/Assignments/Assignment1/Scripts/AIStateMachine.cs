@@ -9,6 +9,7 @@ namespace ASSIGNMENT1
     {
         AIState currentState;
         public List<AIState> States { get; private set; }
+        public Animator AIAnimator { get; private set; }
         public AIDetection Detection { get; private set; }
         public AIPatrolAction PatrolAction { get; private set; }
         public AIChaseAction ChaseAction { get; private set; }
@@ -17,6 +18,7 @@ namespace ASSIGNMENT1
 
         void Awake()
         {
+            AIAnimator = GetComponentInChildren<Animator>();
             Detection = GetComponent<AIDetection>();
             PatrolAction = GetComponent<AIPatrolAction>();
             ChaseAction = GetComponent<AIChaseAction>();
@@ -49,6 +51,8 @@ namespace ASSIGNMENT1
                 new AIIdleState(this)
             };
             currentState = States.Find(st => st.GetType() == typeof(AIPatrolState));
+            AIAnimator.SetTrigger("PatrolState");
+            currentState.OnEnter();
         }
 
         void Start()
@@ -69,26 +73,42 @@ namespace ASSIGNMENT1
             {
                 Debug.Log("Initial state not set. Defaulting to first state.");
                 currentState = States[0];
-            }
+            }            
         }
 
         void Update()
         {
-            if (Detection.CollectableToPickUp && currentState.GetType() != typeof(AIChaseState))
+            if (Detection.CollectableToPickUp && currentState.GetType() == typeof(AIPatrolState))
             {
                 ChangeToState(typeof(AIChaseState));
+                AIAnimator.ResetTrigger("PatrolState");
+                AIAnimator.ResetTrigger("PickUpState");
+                AIAnimator.ResetTrigger("IdleState");
+                AIAnimator.SetTrigger("ChaseState");
             }
             else if (ChaseAction.TargetIsReached && currentState.GetType() == typeof(AIChaseState))
             {
                 ChangeToState(typeof(AIPickUpState));
+                AIAnimator.ResetTrigger("PatrolState");
+                AIAnimator.ResetTrigger("ChaseState");
+                AIAnimator.ResetTrigger("IdleState");
+                AIAnimator.SetTrigger("PickUpState");
             }
-            else if (!Detection.CollectableToPickUp && currentState.GetType() == typeof(AIPickUpState))
+            else if (PickUpAction.PickedUp && currentState.GetType() == typeof(AIPickUpState))
             {
                 ChangeToState(typeof(AIIdleState));
+                AIAnimator.ResetTrigger("PatrolState");
+                AIAnimator.ResetTrigger("ChaseState");
+                AIAnimator.ResetTrigger("PickUpState");
+                AIAnimator.SetTrigger("IdleState");
             }
-            else if (IdleAction.readyToPatrol && currentState.GetType() == typeof(AIIdleState))
+            else if (IdleAction.ReadyToPatrol && currentState.GetType() == typeof(AIIdleState))
             {
                 ChangeToState(typeof(AIPatrolState));
+                AIAnimator.SetTrigger("PatrolState");
+                AIAnimator.ResetTrigger("ChaseState");
+                AIAnimator.ResetTrigger("PickUpState");
+                AIAnimator.ResetTrigger("IdleState");
             }
             currentState.OnUpdate();
         }

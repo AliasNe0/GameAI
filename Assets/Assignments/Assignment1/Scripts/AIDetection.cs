@@ -17,7 +17,7 @@ namespace ASSIGNMENT1
         GameObject rayOrigin;
         int collectableLayer;
         int obstacleLayer;
-        readonly List<int> sides = new() { 0, 1 };
+        readonly List<string> sides = new() { "left", "right" };
 
         public bool ObstacleOnLeft { get; private set; }
         public bool ObstacleOnRight { get; private set; }
@@ -41,13 +41,13 @@ namespace ASSIGNMENT1
             float distanceToObstacle = obstacleDetectionDistance;
             bool obstacleOnLeftSide = false;
             bool obstacleOnRightSide = false;
-            foreach (int side in sides)
+            foreach (string side in sides)
             {
                 int raysOnSide = Mathf.RoundToInt(rays / 2);
                 for (float f = 0; f <= raysOnSide; f++)
                 {
                     float angleClampFactor = 1f - f / raysOnSide;
-                    if (side == 0) angleClampFactor *= -1f;
+                    if (side == "left") angleClampFactor *= -1f;
                     float rayAngle = angleRange / 2 * angleClampFactor * Mathf.Deg2Rad;
                     Vector3 localRayRotation = Vector3.Normalize(new Vector3(Mathf.Sin(rayAngle), yRotationNormalized, Mathf.Cos(rayAngle)));
                     Vector3 gloablRayRotation = transform.TransformDirection(localRayRotation);
@@ -63,14 +63,14 @@ namespace ASSIGNMENT1
                         if (hit.transform.gameObject.layer == obstacleLayer && hit.distance <= obstacleDetectionDistance && rayAngle <= obstacleDetectionAngle / 2)
                         {
                             Debug.DrawLine(rayOriginPosition, hit.point, Color.red);
-                            if (side == 0)
+                            if (side == "left")
                             {
                                 if (!obstacleOnLeftSide)
                                 {
                                     obstacleOnLeftSide = true;
                                 }
                             }
-                            else if (side == 1)
+                            else if (side == "right")
                             {
                                 if (!obstacleOnRightSide)
                                 {

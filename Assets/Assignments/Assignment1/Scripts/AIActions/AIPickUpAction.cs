@@ -6,16 +6,29 @@ namespace ASSIGNMENT1
 {
     public class AIPickUpAction : MonoBehaviour
     {
-        [SerializeField] float pickUpDuration = 5f;
+        [SerializeField] float pickUpDuration = .5f;
+        public bool PickedUp {  get; private set; }
+        float duration;
+        float timer;
+
+        public void ResetPickUp()
+        {
+            PickedUp = false;
+            duration = pickUpDuration;
+            timer = 0f;
+        }
+
         public void PickUp(GameObject collectable)
         {
-            float duration = pickUpDuration * 10000f;
-            float timer = 0f;
-            while (timer < duration)
+            if (timer < duration)
             {
                 timer += Time.deltaTime;
             }
-            Destroy(collectable);
+            else
+            {
+                Destroy(collectable);
+                PickedUp = true;
+            }
         }
     }
 }

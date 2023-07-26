@@ -39,9 +39,6 @@ namespace ASSIGNMENT1
         public void ResetPatrol()
         {
             StopAllCoroutines();
-            if (bait == null) return;
-            Destroy(bait);
-            bait = null;
             baitRotated = true;
             baitRotatedFromObstacle = true;
             baitRotatedFromDeadEnd = true;
