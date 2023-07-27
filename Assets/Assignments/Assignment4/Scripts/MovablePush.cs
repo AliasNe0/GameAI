@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MovablePush : MonoBehaviour
 {
+    [SerializeField] GameObject movableSocket;
     [SerializeField] float pushSpeed = 5f;
     bool pushMovable = false;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Agent"))
@@ -14,7 +16,7 @@ public class MovablePush : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Agent"))
         {
@@ -26,7 +28,8 @@ public class MovablePush : MonoBehaviour
     {
         if (pushMovable)
         {
-            Vector3 direction = Vector3.Normalize(transform.parent.transform.position - transform.position);
+            Vector3 direction = movableSocket.transform.position - transform.parent.transform.position;
+            direction = Vector3.Normalize(new Vector3(direction.x, 0, direction.y));
             transform.parent.position += pushSpeed * direction * Time.deltaTime;
         }
     }

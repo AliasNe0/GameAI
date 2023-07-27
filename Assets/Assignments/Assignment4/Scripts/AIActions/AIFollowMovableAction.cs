@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,7 @@ namespace ASSIGNMENT4
 {
     public class AIFollowMovableAction : MonoBehaviour
     {
+        [SerializeField] NavMeshSurface navSurface;
         public bool Active { get; private set; }
 
         NavMeshAgent navigation;
@@ -16,6 +18,7 @@ namespace ASSIGNMENT4
         {
             Active = true;
             navigation.isStopped = true;
+            navSurface.BuildNavMesh();
         }
         public void SetNavigation(NavMeshAgent agent)
         {

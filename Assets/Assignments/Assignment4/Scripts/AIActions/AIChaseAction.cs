@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 namespace ASSIGNMENT4
 {
@@ -14,15 +13,16 @@ namespace ASSIGNMENT4
         NavMeshAgent navigation;
         Vector3 targetLastPosition;
 
-        public void ResetChase()
-        {
-            Active = true;
-            navigation.isStopped = true;
-        }
-
         public void SetNavigation(NavMeshAgent agent)
         {
             navigation = agent;
+        }
+
+        public void ResetChase()
+        {
+            Active = true;
+            //navigation.SetDestination(navigation.transform.position);
+            navigation.isStopped = true;
         }
 
         public void Chase(GameObject target)

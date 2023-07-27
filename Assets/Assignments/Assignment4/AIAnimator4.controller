@@ -37,7 +37,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IdleState
+    m_ConditionEvent: Idle
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7217286560626323298}
@@ -117,7 +117,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: PickUpState
+    m_ConditionEvent: Crouch
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1627570293091537341}
@@ -169,19 +169,19 @@ AnimatorController:
   m_Name: AIAnimator4
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: ChaseState
+  - m_Name: Walk
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: PickUpState
+  - m_Name: Idle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: IdleState
+  - m_Name: Crouch
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -209,7 +209,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: ChaseState
+    m_ConditionEvent: Walk
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3817620888704744773}
@@ -234,7 +234,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: ChaseState
+    m_ConditionEvent: Walk
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3817620888704744773}

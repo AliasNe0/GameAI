@@ -147,20 +147,20 @@ namespace ASSIGNMENT4
                 else if (!FollowMovableAction.Active && !Detection.CantFindMovable && currentState.GetType() == typeof(AIFollowMovableState))
                 {
                     ChangeToState(typeof(AIPushMovableState));
-                    AIAnimator.ResetTrigger("Walk");
-                    AIAnimator.ResetTrigger("Idle");
-                    AIAnimator.SetTrigger("Crouch");
-                }
-                else if (!PushMovableAction.Active && !Detection.CantFindMovable && currentState.GetType() == typeof(AIPushMovableState))
-                {
-                    ChangeToState(typeof(AIFollowMovableState));
                     AIAnimator.SetTrigger("Walk");
                     AIAnimator.ResetTrigger("Idle");
                     AIAnimator.ResetTrigger("Crouch");
                 }
-                else if (!PushMovableAction.Active && Detection.CantFindMovable && currentState.GetType() == typeof(AIPushMovableState))
+                else if (!Navigation.hasPath && !Detection.CantFindMovable && currentState.GetType() == typeof(AIFollowMovableState))
                 {
                     ChangeToState(typeof(AIChaseState));
+                    AIAnimator.SetTrigger("Walk");
+                    AIAnimator.ResetTrigger("Idle");
+                    AIAnimator.ResetTrigger("Crouch");
+                }
+                else if (!PushMovableAction.Active && !Detection.CantFindMovable && currentState.GetType() == typeof(AIPushMovableState))
+                {
+                    ChangeToState(typeof(AIFollowMovableState));
                     AIAnimator.SetTrigger("Walk");
                     AIAnimator.ResetTrigger("Idle");
                     AIAnimator.ResetTrigger("Crouch");
