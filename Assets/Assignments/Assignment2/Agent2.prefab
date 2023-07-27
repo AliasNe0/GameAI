@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503365770807594190, guid: f3365ef49688bb74b8027e48bde07e4a, type: 3}
       propertyPath: m_Name
-      value: Agent Variant
+      value: Agent2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -126,11 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd0f0c71c632a84e8725f636c14caa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectables:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &1710801321016820949
 MonoBehaviour:
   m_ObjectHideFlags: 0

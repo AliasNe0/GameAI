@@ -11,6 +11,8 @@ namespace ASSIGNMENT2
         [SerializeField] float stopChaseAtDistance = 1f;
         public bool Active { get; private set; }
 
+        Vector3 targetLastPosition;
+
         public void ResetChase(NavMeshAgent navigation)
         {
             Active = true;
@@ -18,9 +20,11 @@ namespace ASSIGNMENT2
         }
         public void Chase(GameObject target, NavMeshAgent navigation)
         {
-            if (navigation.isStopped && target)
+            if (!target) return;
+            if (navigation.isStopped || target.transform.position != targetLastPosition)
             {
-                navigation.SetDestination(target.transform.position);
+                targetLastPosition = target.transform.position;
+                navigation.SetDestination(targetLastPosition);
                 navigation.isStopped = false;
             }
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);

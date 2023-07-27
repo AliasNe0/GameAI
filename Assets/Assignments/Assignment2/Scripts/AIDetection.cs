@@ -6,29 +6,29 @@ namespace ASSIGNMENT2
 {
     public class AIDetection : MonoBehaviour
     {
-        [SerializeField] List<GameObject> collectables;
-        public bool ListIsEmpty { get; private set; }
-
+        public bool CantFindCollectable { get; private set; }
         public GameObject CollectableToPickUp { get; private set; }
 
         private void Awake()
         {
-            if (collectables.Count == 0)
-            {
-                Debug.Log("Define at least one collectable!");
-                ListIsEmpty = true;
-            }
-            CollectableToPickUp = collectables[0];
+            CantFindCollectable = false;
         }
 
         void Update()
         {
-            if (CollectableToPickUp == null && collectables.Count != 0)
+            if (CollectableToPickUp == null)
             {
-                ListIsEmpty = false;
-                collectables.RemoveAt(0);
-                if (collectables.Count != 0) CollectableToPickUp = collectables[0];
-                else ListIsEmpty = true;
+                GameObject collectable = GameObject.FindWithTag("Collectable");
+                if (collectable)
+                {
+                    CantFindCollectable = false;
+                    CollectableToPickUp = collectable;
+                }
+                else
+                {
+                    CantFindCollectable = true;
+                    CollectableToPickUp = null;
+                }
             }
         }
     }

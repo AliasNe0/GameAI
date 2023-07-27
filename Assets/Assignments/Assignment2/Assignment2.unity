@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -879,7 +879,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.083333336
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 7bedd52a4598f51408fb433ed9637e22, type: 2}
   m_BuildHeightMesh: 0
@@ -1644,11 +1644,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1222686627 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 865985425362486500, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
-  m_PrefabInstance: {fileID: 1250112558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1250112558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1714,11 +1709,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
---- !u!1 &1262072071 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 865985425362486500, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
-  m_PrefabInstance: {fileID: 229298250}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1422606496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,16 +2198,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1545105302 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 865985425362486500, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
-  m_PrefabInstance: {fileID: 6284203768545480501}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1579195755 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 865985425362486500, guid: 2b81040bddc3c0c468cb86369cc1f21a, type: 3}
-  m_PrefabInstance: {fileID: 1953287701}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1620234201
 GameObject:
   m_ObjectHideFlags: 0
@@ -3184,22 +3164,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agent
       objectReference: {fileID: 0}
-    - target: {fileID: 6295265963443458395, guid: d05ca663ad45e284c86c2abed07c76fe, type: 3}
-      propertyPath: collectables.Array.data[0]
-      value: 
-      objectReference: {fileID: 1545105302}
-    - target: {fileID: 6295265963443458395, guid: d05ca663ad45e284c86c2abed07c76fe, type: 3}
-      propertyPath: collectables.Array.data[1]
-      value: 
-      objectReference: {fileID: 1222686627}
-    - target: {fileID: 6295265963443458395, guid: d05ca663ad45e284c86c2abed07c76fe, type: 3}
-      propertyPath: collectables.Array.data[2]
-      value: 
-      objectReference: {fileID: 1579195755}
-    - target: {fileID: 6295265963443458395, guid: d05ca663ad45e284c86c2abed07c76fe, type: 3}
-      propertyPath: collectables.Array.data[3]
-      value: 
-      objectReference: {fileID: 1262072071}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

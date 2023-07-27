@@ -77,22 +77,24 @@ namespace ASSIGNMENT2
 
         void Update()
         {
-            if (Detection.ListIsEmpty)
+            if (Detection.CantFindCollectable)
             {
                 if (lastIdle)
                 {
                     lastIdle = false;
+                    firstIdle = true;
                     ChangeToState(typeof(AIIdleState));
                     AIAnimator.ResetTrigger("ChaseState");
                     AIAnimator.SetTrigger("IdleState");
                     AIAnimator.ResetTrigger("PickUpState");
                 }
             }
-            else if (!Detection.ListIsEmpty)
+            else if (!Detection.CantFindCollectable)
             {
                 if (firstIdle && currentState.GetType() == typeof(AIIdleState))
                 {
                     firstIdle = false;
+                    lastIdle = true;
                     ChangeToState(typeof(AIChaseState));
                     AIAnimator.SetTrigger("ChaseState");
                     AIAnimator.ResetTrigger("IdleState");
