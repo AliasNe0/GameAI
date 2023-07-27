@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace ASSIGNMENT2
+namespace ASSIGNMENT4
 {
     public class AIChaseAction : MonoBehaviour
     {
