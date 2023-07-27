@@ -22,7 +22,8 @@ namespace ASSIGNMENT4
 
         public override void OnEnter()
         {
-            chaseAction.ResetChase(navigation);
+            chaseAction.SetNavigation(navigation);
+            chaseAction.ResetChase();
         }
 
         public override void OnExit()
@@ -32,15 +33,15 @@ namespace ASSIGNMENT4
 
         public override void OnUpdate()
         {
-
+            if (detection.CollectableToPickUp)
+            {
+                chaseAction.Chase(detection.CollectableToPickUp);
+            }
         }
 
         public override void OnFixedUpdate()
         {
-            if (detection.CollectableToPickUp)
-            {
-                chaseAction.Chase(detection.CollectableToPickUp, navigation);
-            }
+
         }
     }
 }

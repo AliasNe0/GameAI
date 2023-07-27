@@ -17,7 +17,7 @@ namespace ASSIGNMENT4
 
         public override void OnEnter()
         {
-
+            pushMovableAction.ResetPushMovable();
         }
 
         public override void OnExit()
