@@ -6,20 +6,20 @@ namespace ASSIGNMENT4
 {
     public class AIPickUpState : AIState
     {
-        AIDetection detection;
         AIPickUpAction pickUpAction;
 
         public AIPickUpState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
+            animator = stateMachine.AIAnimator;
             detection = stateMachine.Detection;
             pickUpAction = stateMachine.PickUpAction;
         }
 
         public override void OnEnter()
         {
-            pickUpAction.ResetPickUp();
+            pickUpAction.ResetPickUp(animator);
         }
 
         public override void OnExit()

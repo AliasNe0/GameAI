@@ -23,11 +23,14 @@ namespace ASSIGNMENT4
             navSurface = surface;
         }
 
-        public void ResetChase()
+        public void ResetChase(Animator animator)
         {
             Active = true;
             detection.HasPathToCollectable = true;
             navigation.isStopped = true;
+            animator.SetTrigger("Walk");
+            animator.ResetTrigger("Idle");
+            animator.ResetTrigger("Crouch");
         }
 
         public void Chase(GameObject target)

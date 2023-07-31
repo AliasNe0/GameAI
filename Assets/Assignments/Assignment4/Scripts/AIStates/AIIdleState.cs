@@ -12,12 +12,13 @@ namespace ASSIGNMENT4
 
         public override void OnStart()
         {
+            animator = stateMachine.AIAnimator;
             idleAction = stateMachine.IdleAction;
         }
 
         public override void OnEnter()
         {
-            idleAction.ResetIdle();
+            idleAction.ResetIdle(animator);
             idleAction.Idle();
         }
 

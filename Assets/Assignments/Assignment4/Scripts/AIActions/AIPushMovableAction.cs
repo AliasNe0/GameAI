@@ -10,7 +10,7 @@ namespace ASSIGNMENT4
         public bool Active { get; private set; }
         NavMeshAgent navigation;
 
-        public void ResetPushMovable(NavMeshAgent agent)
+        public void ResetPushMovable(NavMeshAgent agent, Animator animator)
         {
             Active = true;
             navigation = agent;

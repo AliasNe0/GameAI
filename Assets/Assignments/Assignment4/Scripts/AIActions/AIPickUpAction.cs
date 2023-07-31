@@ -11,11 +11,14 @@ namespace ASSIGNMENT4
         float duration;
         float timer;
 
-        public void ResetPickUp()
+        public void ResetPickUp(Animator animator)
         {
             Active = true;
             duration = pickUpDuration;
             timer = 0f;
+            animator.ResetTrigger("Walk");
+            animator.ResetTrigger("Idle");
+            animator.SetTrigger("Crouch");
         }
 
         public void PickUp(GameObject collectable)

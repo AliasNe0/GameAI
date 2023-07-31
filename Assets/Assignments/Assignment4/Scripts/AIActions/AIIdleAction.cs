@@ -9,9 +9,12 @@ namespace ASSIGNMENT4
         [SerializeField] float idleDuration = 2f;
         public bool Active { get; private set; }
 
-        public void ResetIdle()
+        public void ResetIdle(Animator animator)
         {
             Active = true;
+            animator.ResetTrigger("Walk");
+            animator.SetTrigger("Idle");
+            animator.ResetTrigger("Crouch");
         }
 
         public void Idle()

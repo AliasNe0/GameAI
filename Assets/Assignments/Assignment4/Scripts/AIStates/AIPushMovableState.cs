@@ -8,14 +8,13 @@ namespace ASSIGNMENT4
 {
     public class AIPushMovableState : AIState
     {
-        AIDetection detection;
-        NavMeshAgent navigation;
         AIPushMovableAction pushMovableAction;
 
         public AIPushMovableState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
+            animator = stateMachine.AIAnimator;
             detection = stateMachine.Detection;
             navigation = stateMachine.Navigation;
             pushMovableAction = stateMachine.PushMovableAction;
@@ -23,7 +22,7 @@ namespace ASSIGNMENT4
 
         public override void OnEnter()
         {
-            pushMovableAction.ResetPushMovable(navigation);
+            pushMovableAction.ResetPushMovable(navigation, animator);
         }
 
         public override void OnExit()

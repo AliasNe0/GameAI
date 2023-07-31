@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class MovablePush : MonoBehaviour
 {
-    [SerializeField] GameObject movableSocket;
-    [SerializeField] float pushSpeed = 5f;
+    [SerializeField] GameObject movableDestroyer;
+    [SerializeField] GameObject bridge;
+    [SerializeField] float pushSpeed = 2f;
     bool pushMovable = false;
 
     void OnTriggerEnter(Collider other)
@@ -16,6 +17,7 @@ public class MovablePush : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("MovableDestroyer"))
         {
+            bridge.SetActive(true);
             Destroy(gameObject);
         }
     }
@@ -32,7 +34,7 @@ public class MovablePush : MonoBehaviour
     {
         if (pushMovable)
         {
-            Vector3 direction = movableSocket.transform.position - transform.parent.transform.position;
+            Vector3 direction = movableDestroyer.transform.position - transform.parent.transform.position;
             direction = Vector3.Normalize(new Vector3(direction.x, 0, direction.y));
             transform.parent.position += pushSpeed * direction * Time.deltaTime;
         }

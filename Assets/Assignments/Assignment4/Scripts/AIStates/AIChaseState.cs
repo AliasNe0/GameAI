@@ -8,25 +8,23 @@ namespace ASSIGNMENT4
 {
     public class AIChaseState : AIState
     {
-        AIDetection detection;
-        NavMeshAgent navigation;
-        NavMeshSurface navSurface;
         AIChaseAction chaseAction;
 
         public AIChaseState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
+            detection = stateMachine.Detection;
+            animator = stateMachine.AIAnimator;
             navigation = stateMachine.Navigation;
             navSurface = stateMachine.navSurface;
-            detection = stateMachine.Detection;
             chaseAction = stateMachine.ChaseAction;
             chaseAction.SetChase(detection, navigation, navSurface);
         }
 
         public override void OnEnter()
         {
-            chaseAction.ResetChase();
+            chaseAction.ResetChase(animator);
         }
 
         public override void OnExit()

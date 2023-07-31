@@ -24,8 +24,6 @@ namespace ASSIGNMENT4
 
         AIState currentState;
         bool firstIdle = true;
-        bool lastIdle = true;
-        bool cantFindMovableIdle = false;
 
         void Awake()
         {
@@ -82,21 +80,17 @@ namespace ASSIGNMENT4
             }
 
             currentState.OnEnter();
-            AIAnimator.SetTrigger("IdleState");
+            AIAnimator.SetTrigger("Idle");
         }
 
         void Update()
         {
             if (Detection.CantFindCollectable)
             {
-                if (lastIdle)
+                if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
                 {
-                    lastIdle = false;
                     firstIdle = true;
                     ChangeToState(typeof(AIIdleState));
-                    AIAnimator.ResetTrigger("Walk");
-                    AIAnimator.SetTrigger("Idle");
-                    AIAnimator.ResetTrigger("Crouch");
                 }
             }
             else if (!Detection.CantFindCollectable)
@@ -104,77 +98,50 @@ namespace ASSIGNMENT4
                 if (firstIdle && currentState.GetType() == typeof(AIIdleState))
                 {
                     firstIdle = false;
-                    lastIdle = true;
                     ChangeToState(typeof(AIChaseState));
-                    AIAnimator.SetTrigger("Walk");
-                    AIAnimator.ResetTrigger("Idle");
-                    AIAnimator.ResetTrigger("Crouch");
                 }
                 if (Detection.HasPathToCollectable)
                 {
-                    if (currentState.GetType() == typeof(AIChaseState) && currentState.GetType() == typeof(AIIdleState) && currentState.GetType() == typeof(AIPickUpState))
+                    if (currentState.GetType() != typeof(AIChaseState) && currentState.GetType() != typeof(AIIdleState) && currentState.GetType() != typeof(AIPickUpState))
                     {
                         ChangeToState(typeof(AIChaseState));
-                        AIAnimator.SetTrigger("Walk");
-                        AIAnimator.ResetTrigger("Idle");
-                        AIAnimator.ResetTrigger("Crouch");
                     }
-                    else if(!ChaseAction.Active && currentState.GetType() == typeof(AIChaseState))
+                    else if (!ChaseAction.Active && currentState.GetType() == typeof(AIChaseState))
                     {
                         ChangeToState(typeof(AIIdleState));
-                        AIAnimator.ResetTrigger("Walk");
-                        AIAnimator.SetTrigger("Idle");
-                        AIAnimator.ResetTrigger("Crouch");
                     }
                     else if (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState))
                     {
                         ChangeToState(typeof(AIPickUpState));
-                        AIAnimator.ResetTrigger("Walk");
-                        AIAnimator.ResetTrigger("Idle");
-                        AIAnimator.SetTrigger("Crouch");
                     }
                     else if (!PickUpAction.Active && currentState.GetType() == typeof(AIPickUpState))
                     {
                         ChangeToState(typeof(AIChaseState));
-                        AIAnimator.SetTrigger("Walk");
-                        AIAnimator.ResetTrigger("Idle");
-                        AIAnimator.ResetTrigger("Crouch");
                     }
                 }
                 else
                 {
                     if (!Detection.CantFindMovable && Detection.HasPathToMovable)
                     {
-                        cantFindMovableIdle = false;
                         if (currentState.GetType() != typeof(AIFollowMovableState) && currentState.GetType() != typeof(AIPushMovableState))
                         {
                             ChangeToState(typeof(AIFollowMovableState));
-                            AIAnimator.SetTrigger("Walk");
-                            AIAnimator.ResetTrigger("Idle");
-                            AIAnimator.ResetTrigger("Crouch");
                         }
                         else if (!FollowMovableAction.Active && currentState.GetType() == typeof(AIFollowMovableState))
                         {
                             ChangeToState(typeof(AIPushMovableState));
-                            AIAnimator.SetTrigger("Walk");
-                            AIAnimator.ResetTrigger("Idle");
-                            AIAnimator.ResetTrigger("Crouch");
                         }
                         else if (!PushMovableAction.Active && currentState.GetType() == typeof(AIPushMovableState))
                         {
                             ChangeToState(typeof(AIFollowMovableState));
-                            AIAnimator.SetTrigger("Walk");
-                            AIAnimator.ResetTrigger("Idle");
-                            AIAnimator.ResetTrigger("Crouch");
                         }
                     }
-                    else if (!cantFindMovableIdle)
+                    else
                     {
-                        cantFindMovableIdle = true;
-                        ChangeToState(typeof(AIIdleState));
-                        AIAnimator.ResetTrigger("Walk");
-                        AIAnimator.SetTrigger("Idle");
-                        AIAnimator.ResetTrigger("Crouch");
+                        if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
+                        {
+                            ChangeToState(typeof(AIIdleState));
+                        }
                     }
                 }
             }

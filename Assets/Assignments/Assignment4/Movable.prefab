@@ -200,4 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c401f5e5b5b4442a2a04d26ffa2782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushSpeed: 1
+  movableDestroyer: {fileID: 0}
+  bridge: {fileID: 0}
+  pushSpeed: 2

@@ -8,15 +8,13 @@ namespace ASSIGNMENT4
 {
     public class AIFollowMovableState : AIState
     {
-        AIDetection detection;
-        NavMeshAgent navigation;
-        NavMeshSurface navSurface;
         AIFollowMovableAction followMovableAction;
 
         public AIFollowMovableState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
+            animator = stateMachine.AIAnimator;
             detection = stateMachine.Detection;
             navigation = stateMachine.Navigation;
             navSurface = stateMachine.navSurface;
@@ -26,7 +24,7 @@ namespace ASSIGNMENT4
         public override void OnEnter()
         {
             followMovableAction.SetFollowMovable(detection, navigation, navSurface);
-            followMovableAction.ResetFollowMovable();
+            followMovableAction.ResetFollowMovable(animator);
         }
 
         public override void OnExit()

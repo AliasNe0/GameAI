@@ -22,11 +22,14 @@ namespace ASSIGNMENT4
             navSurface = surface;
         }
 
-        public void ResetFollowMovable()
+        public void ResetFollowMovable(Animator animator)
         {
             Active = true;
             detection.HasPathToMovable = true;
             navigation.isStopped = true;
+            animator.SetTrigger("Walk");
+            animator.ResetTrigger("Idle");
+            animator.ResetTrigger("Crouch");
         }
 
         public void FollowMovable(GameObject target)
