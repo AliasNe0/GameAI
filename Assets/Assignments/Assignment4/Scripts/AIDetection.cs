@@ -15,8 +15,8 @@ namespace ASSIGNMENT4
 
         private void Awake()
         {
-            CantFindCollectable = false;
-            CantFindMovable = false;
+            CantFindCollectable = true;
+            CantFindMovable = true;
         }
 
         void Update()

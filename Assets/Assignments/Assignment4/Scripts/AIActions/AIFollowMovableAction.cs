@@ -25,8 +25,8 @@ namespace ASSIGNMENT4
         public void ResetFollowMovable(Animator animator)
         {
             Active = true;
-            detection.HasPathToMovable = true;
             navigation.isStopped = true;
+            detection.HasPathToMovable = false;
             animator.SetTrigger("Walk");
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Crouch");
@@ -37,9 +37,10 @@ namespace ASSIGNMENT4
             if (!target) return;
             if (navigation.isStopped || target.transform.position != targetLastPosition)
             {
+                detection.HasPathToMovable = true;
                 targetLastPosition = target.transform.position;
-                navigation.SetDestination(targetLastPosition);
                 navSurface.BuildNavMesh();
+                navigation.SetDestination(targetLastPosition);
                 navigation.isStopped = false;
             }
             if (!navigation.hasPath)

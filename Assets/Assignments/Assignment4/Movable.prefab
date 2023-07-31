@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.03, y: 1.689, z: 2.39}
-  m_LocalScale: {x: 1.9, y: 1, z: 1.9}
+  m_LocalScale: {x: 1.8, y: 0.67033, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 796022002828447332}
@@ -132,7 +132,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &7749364558103819374
 GameObject:
@@ -144,7 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796022002828447332}
   - component: {fileID: 8572307033466293664}
-  - component: {fileID: 7920926518854200884}
+  - component: {fileID: 4501783337766416134}
   m_Layer: 0
   m_Name: PushStateTrigger
   m_TagString: Movable
@@ -162,7 +162,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2249829, y: 1.2249829, z: 1.2249829}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3432757594240296121}
@@ -188,7 +188,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7920926518854200884
+--- !u!114 &4501783337766416134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

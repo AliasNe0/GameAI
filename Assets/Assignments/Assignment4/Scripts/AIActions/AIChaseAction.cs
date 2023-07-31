@@ -26,8 +26,8 @@ namespace ASSIGNMENT4
         public void ResetChase(Animator animator)
         {
             Active = true;
-            detection.HasPathToCollectable = true;
             navigation.isStopped = true;
+            detection.HasPathToCollectable = false;
             animator.SetTrigger("Walk");
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Crouch");
@@ -38,9 +38,10 @@ namespace ASSIGNMENT4
             if (!target) return;
             if (navigation.isStopped || target.transform.position != targetLastPosition)
             {
+                detection.HasPathToCollectable = true;
+                navSurface.BuildNavMesh();
                 targetLastPosition = target.transform.position;
                 navigation.SetDestination(targetLastPosition);
-                navSurface.BuildNavMesh();
                 navigation.isStopped = false;
             }
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);

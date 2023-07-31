@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 namespace ASSIGNMENT4
 {
@@ -95,14 +94,14 @@ namespace ASSIGNMENT4
             }
             else if (!Detection.CantFindCollectable)
             {
-                if (firstIdle && currentState.GetType() == typeof(AIIdleState))
-                {
-                    firstIdle = false;
-                    ChangeToState(typeof(AIChaseState));
-                }
                 if (Detection.HasPathToCollectable)
                 {
-                    if (currentState.GetType() != typeof(AIChaseState) && currentState.GetType() != typeof(AIIdleState) && currentState.GetType() != typeof(AIPickUpState))
+                    if (firstIdle && currentState.GetType() == typeof(AIIdleState))
+                    {
+                        firstIdle = false;
+                        ChangeToState(typeof(AIChaseState));
+                    }
+                    else if (currentState.GetType() != typeof(AIChaseState) && currentState.GetType() != typeof(AIIdleState) && currentState.GetType() != typeof(AIPickUpState))
                     {
                         ChangeToState(typeof(AIChaseState));
                     }
@@ -138,10 +137,7 @@ namespace ASSIGNMENT4
                     }
                     else
                     {
-                        if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
-                        {
-                            ChangeToState(typeof(AIIdleState));
-                        }
+                        ChangeToState(typeof(AIChaseState));
                     }
                 }
             }
