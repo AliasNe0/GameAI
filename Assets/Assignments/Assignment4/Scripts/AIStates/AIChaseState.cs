@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,9 @@ namespace ASSIGNMENT4
 {
     public class AIChaseState : AIState
     {
-        NavMeshAgent navigation;
         AIDetection detection;
+        NavMeshAgent navigation;
+        NavMeshSurface navSurface;
         AIChaseAction chaseAction;
 
         public AIChaseState(AIStateMachine sm) : base(sm) { }
@@ -16,13 +18,14 @@ namespace ASSIGNMENT4
         public override void OnStart()
         {
             navigation = stateMachine.Navigation;
+            navSurface = stateMachine.navSurface;
             detection = stateMachine.Detection;
             chaseAction = stateMachine.ChaseAction;
+            chaseAction.SetChase(detection, navigation, navSurface);
         }
 
         public override void OnEnter()
         {
-            chaseAction.SetNavigation(navigation);
             chaseAction.ResetChase();
         }
 

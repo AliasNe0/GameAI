@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,18 +11,22 @@ namespace ASSIGNMENT4
         [SerializeField] float stopChaseAtDistance = 1f;
         public bool Active { get; private set; }
 
+        AIDetection detection;
         NavMeshAgent navigation;
+        NavMeshSurface navSurface;
         Vector3 targetLastPosition;
 
-        public void SetNavigation(NavMeshAgent agent)
+        public void SetChase(AIDetection AIdetection, NavMeshAgent agent, NavMeshSurface surface)
         {
+            detection = AIdetection;
             navigation = agent;
+            navSurface = surface;
         }
 
         public void ResetChase()
         {
             Active = true;
-            //navigation.SetDestination(navigation.transform.position);
+            detection.HasPathToCollectable = true;
             navigation.isStopped = true;
         }
 
@@ -32,6 +37,7 @@ namespace ASSIGNMENT4
             {
                 targetLastPosition = target.transform.position;
                 navigation.SetDestination(targetLastPosition);
+                navSurface.BuildNavMesh();
                 navigation.isStopped = false;
             }
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
@@ -39,6 +45,10 @@ namespace ASSIGNMENT4
             {
                 Active = false;
                 navigation.isStopped = true;
+            }
+            if (!navigation.hasPath)
+            {
+                detection.HasPathToCollectable = false;
             }
         }
     }

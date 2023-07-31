@@ -8,21 +8,25 @@ namespace ASSIGNMENT4
 {
     public class AIFollowMovableAction : MonoBehaviour
     {
-        [SerializeField] NavMeshSurface navSurface;
         public bool Active { get; private set; }
 
+        AIDetection detection;
         NavMeshAgent navigation;
+        NavMeshSurface navSurface;
         Vector3 targetLastPosition;
+
+        public void SetFollowMovable(AIDetection AIdetection, NavMeshAgent agent, NavMeshSurface surface)
+        {
+            detection = AIdetection;
+            navigation = agent;
+            navSurface = surface;
+        }
 
         public void ResetFollowMovable()
         {
             Active = true;
+            detection.HasPathToMovable = true;
             navigation.isStopped = true;
-            navSurface.BuildNavMesh();
-        }
-        public void SetNavigation(NavMeshAgent agent)
-        {
-            navigation = agent;
         }
 
         public void FollowMovable(GameObject target)
@@ -32,7 +36,12 @@ namespace ASSIGNMENT4
             {
                 targetLastPosition = target.transform.position;
                 navigation.SetDestination(targetLastPosition);
+                navSurface.BuildNavMesh();
                 navigation.isStopped = false;
+            }
+            if (!navigation.hasPath)
+            {
+                detection.HasPathToMovable = false;
             }
         }
 

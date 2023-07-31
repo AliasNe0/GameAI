@@ -14,6 +14,10 @@ public class MovablePush : MonoBehaviour
         {
             pushMovable = true;
         }
+        else if (other.gameObject.CompareTag("MovableDestroyer"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other)

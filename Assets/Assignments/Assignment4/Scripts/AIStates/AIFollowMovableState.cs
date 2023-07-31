@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,22 +8,24 @@ namespace ASSIGNMENT4
 {
     public class AIFollowMovableState : AIState
     {
-        NavMeshAgent navigation;
         AIDetection detection;
+        NavMeshAgent navigation;
+        NavMeshSurface navSurface;
         AIFollowMovableAction followMovableAction;
 
         public AIFollowMovableState(AIStateMachine sm) : base(sm) { }
 
         public override void OnStart()
         {
-            navigation = stateMachine.Navigation;
             detection = stateMachine.Detection;
+            navigation = stateMachine.Navigation;
+            navSurface = stateMachine.navSurface;
             followMovableAction = stateMachine.FollowMovableAction;
         }
 
         public override void OnEnter()
         {
-            followMovableAction.SetNavigation(navigation);
+            followMovableAction.SetFollowMovable(detection, navigation, navSurface);
             followMovableAction.ResetFollowMovable();
         }
 

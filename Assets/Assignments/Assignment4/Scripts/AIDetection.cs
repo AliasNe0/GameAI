@@ -7,13 +7,16 @@ namespace ASSIGNMENT4
     public class AIDetection : MonoBehaviour
     {
         public bool CantFindCollectable { get; private set; }
+        public bool HasPathToCollectable = true;
         public bool CantFindMovable { get; private set; }
+        public bool HasPathToMovable = true;
         public GameObject CollectableToPickUp { get; private set; }
         public GameObject Movable { get; private set; }
 
         private void Awake()
         {
             CantFindCollectable = false;
+            CantFindMovable = false;
         }
 
         void Update()
