@@ -9,6 +9,7 @@ TagManager:
   - Agent
   - MovableDestroyer
   - JumpLink
+  - Tree
   layers:
   - Default
   - TransparentFX
