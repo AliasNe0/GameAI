@@ -7,6 +7,7 @@ namespace ASSIGNMENT5
     public class AIChopAction : MonoBehaviour
     {
         [SerializeField] float chopDuration = .5f;
+        [SerializeField] float damageToTree = 10f;
         public bool Active {  get; private set; }
         float duration;
         float timer;
@@ -32,7 +33,7 @@ namespace ASSIGNMENT5
             }
             else
             {
-                Destroy(tree);
+                tree.GetComponent<TreeHealth>().DecreaseHealt(damageToTree);
                 Active = false;
             }
         }

@@ -97,4 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentObject: {fileID: 9179529254111228966, guid: 7f188d884537e9d43adb1ed487052f59, type: 3}
-  interval: 30
+  interval: 5

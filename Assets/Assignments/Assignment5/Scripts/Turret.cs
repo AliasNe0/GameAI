@@ -21,11 +21,13 @@ namespace ASSIGNMENT5
         {
             if (target == null)
             {
+                bullets.Stop();
                 FindTarget();
             }
             else
             {
-                Shoot();
+                if (!bullets.isPlaying) bullets.Play();
+                RotateTurret();
             }
         }
 
@@ -45,30 +47,22 @@ namespace ASSIGNMENT5
             }
         }
 
-        void Shoot()
+        void RotateTurret()
         {
             float distance = Vector3.Distance(target.transform.position, transform.position);
-            if (bullets.isPlaying && distance > range)
+            if (distance > range)
             {
                 target = null;
-                bullets.Stop();
-                return;
             }
             else
             {
-                if (!bullets.isPlaying) bullets.Play();
-                RotateTurret();
+                float targetSpeed = 0f;
+                NavMeshAgent navigation = target.GetComponent<NavMeshAgent>();
+                if (!navigation.isStopped) targetSpeed = target.GetComponent<NavMeshAgent>().speed;
+                Vector3 direction = bullets.main.startSpeed.constant * Vector3.Normalize(target.transform.position - transform.position) + target.transform.forward * targetSpeed;
+                direction = new Vector3(direction.x, 0, direction.z);
+                transform.rotation = Quaternion.LookRotation(direction);
             }
-        }
-
-        void RotateTurret()
-        {
-            float targetSpeed = 0f;
-            NavMeshAgent navigation = target.GetComponent<NavMeshAgent>();
-            if (!navigation.isStopped) targetSpeed = target.GetComponent<NavMeshAgent>().speed;
-            Vector3 direction = bullets.main.startSpeed.constant * Vector3.Normalize(target.transform.position - transform.position) + target.transform.forward * targetSpeed;
-            direction = new Vector3(direction.x, 0, direction.z);
-            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

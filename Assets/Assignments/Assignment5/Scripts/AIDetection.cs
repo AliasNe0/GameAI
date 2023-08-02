@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ASSIGNMENT5
 {
@@ -22,6 +23,7 @@ namespace ASSIGNMENT5
                 else
                 {
                     Tree = null;
+                    SceneManager.LoadScene(0);
                 }
             }
         }

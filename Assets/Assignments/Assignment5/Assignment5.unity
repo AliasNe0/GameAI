@@ -1215,10 +1215,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4120906610413027561, guid: 81411ee216daa4640af637d360971c8f, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4980129457666144522, guid: 81411ee216daa4640af637d360971c8f, type: 3}
       propertyPath: m_Name
       value: Turret (1)
