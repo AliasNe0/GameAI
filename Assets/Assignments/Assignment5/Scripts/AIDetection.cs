@@ -23,7 +23,7 @@ namespace ASSIGNMENT5
                 else
                 {
                     Tree = null;
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
             }
         }
