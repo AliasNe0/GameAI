@@ -18,13 +18,27 @@ namespace ASSIGNMENT5
                 if (trees.Length != 0)
                 {
                     int i = Random.Range(0, trees.Length);
-                    Tree = trees[i];
+                    if (!trees[i].GetComponent<TreeHealth>().Fallen)
+                    {
+                        Tree = trees[i];
+                    }
+                    else
+                    {
+                        foreach (GameObject tree in trees)
+                        {
+                            if (!tree.GetComponent<TreeHealth>().Fallen)
+                            {
+                                Tree = trees[i];
+                                return;
+                            }
+                        }
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    }
                 }
-                else
-                {
-                    Tree = null;
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }
+            }
+            else if (Tree.GetComponent<TreeHealth>().Fallen)
+            {
+                Tree = null;
             }
         }
     }

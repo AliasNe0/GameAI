@@ -8,12 +8,20 @@ namespace ASSIGNMENT5
     {
         [SerializeField] float treeHealth = 100f;
 
+        public bool Fallen { get; private set; }
+
+        private void Awake()
+        {
+            Fallen = false;
+        }
+
         public void DecreaseHealt(float hitPoints)
         {
             treeHealth -= hitPoints;
             if (treeHealth <= 0)
             {
-                Destroy(gameObject);
+                Fallen = true;
+                transform.rotation = Quaternion.LookRotation(-transform.up);
             }
         }
     }
