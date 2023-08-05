@@ -21,6 +21,7 @@ namespace ASSIGNMENT4
 
         void Update()
         {
+            if (!HasPathToCollectable) CollectableToPickUp = null;
             if (CollectableToPickUp == null)
             {
                 GameObject collectable = GameObject.FindWithTag("Collectable");
@@ -35,6 +36,8 @@ namespace ASSIGNMENT4
                     CollectableToPickUp = null;
                 }
             }
+
+            if (!HasPathToMovable) Movable = null;
             if (Movable == null)
             {
                 GameObject movable = GameObject.FindWithTag("Movable");
