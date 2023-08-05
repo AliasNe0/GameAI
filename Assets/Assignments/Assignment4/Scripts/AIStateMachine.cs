@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace ASSIGNMENT4
 {
@@ -19,7 +20,6 @@ namespace ASSIGNMENT4
         public AIPickUpAction PickUpAction { get; private set; }
         public AIIdleAction IdleAction { get; private set; }
         public AIFollowMovableAction FollowMovableAction { get; private set; }
-        public AIPushMovableAction PushMovableAction { get; private set; }
 
         AIState currentState;
         bool firstIdle = true;
@@ -33,7 +33,6 @@ namespace ASSIGNMENT4
             PickUpAction = GetComponent<AIPickUpAction>();
             IdleAction = GetComponent<AIIdleAction>();
             FollowMovableAction = GetComponent<AIFollowMovableAction>();
-            PushMovableAction = GetComponent<AIPushMovableAction>();
         }
 
         public void ChangeToState(Type stateType)
@@ -58,8 +57,7 @@ namespace ASSIGNMENT4
                 new AIIdleState(this),
                 new AIChaseState(this),
                 new AIPickUpState(this),
-                new AIFollowMovableState(this),
-                new AIPushMovableState(this)
+                new AIFollowMovableState(this)
             };
             currentState = States.Find(st => st.GetType() == typeof(AIIdleState));
         }
@@ -84,17 +82,10 @@ namespace ASSIGNMENT4
 
         void Update()
         {
-            if (Detection.CantFindCollectable)
+            if (Detection.CollectableToPickUp)
             {
-                if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
-                {
-                    firstIdle = true;
-                    ChangeToState(typeof(AIIdleState));
-                }
-            }
-            else if (!Detection.CantFindCollectable)
-            {
-                if (Detection.HasPathToCollectable)
+                if (!FollowMovableAction.Active && !ChaseAction.Active && !IdleAction.Active && !PickUpAction.Active) Navigation.SetDestination(Detection.CollectableToPickUp.transform.position);
+                if (!FollowMovableAction.Active && Navigation.pathStatus == NavMeshPathStatus.PathComplete)
                 {
                     if (firstIdle && currentState.GetType() == typeof(AIIdleState))
                     {
@@ -113,32 +104,38 @@ namespace ASSIGNMENT4
                     {
                         ChangeToState(typeof(AIPickUpState));
                     }
-                    else if (!PickUpAction.Active && currentState.GetType() == typeof(AIPickUpState))
+                }
+                else if (Detection.Movable)
+                {
+                    if (!FollowMovableAction.Active) Navigation.SetDestination(Detection.Movable.transform.position);
+                    if (Navigation.pathStatus != NavMeshPathStatus.PathInvalid)
                     {
-                        ChangeToState(typeof(AIChaseState));
+                        if (!FollowMovableAction.Active) ChangeToState(typeof(AIFollowMovableState));
+                    }
+                    else
+                    {
+                        if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
+                        {
+                            firstIdle = true;
+                            ChangeToState(typeof(AIIdleState));
+                        }
                     }
                 }
                 else
                 {
-                    if (!Detection.CantFindMovable && Detection.HasPathToMovable)
+                    if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
                     {
-                        if (currentState.GetType() != typeof(AIFollowMovableState) && currentState.GetType() != typeof(AIPushMovableState))
-                        {
-                            ChangeToState(typeof(AIFollowMovableState));
-                        }
-                        else if (!FollowMovableAction.Active && currentState.GetType() == typeof(AIFollowMovableState))
-                        {
-                            ChangeToState(typeof(AIPushMovableState));
-                        }
-                        else if (!PushMovableAction.Active && currentState.GetType() == typeof(AIPushMovableState))
-                        {
-                            ChangeToState(typeof(AIFollowMovableState));
-                        }
+                        firstIdle = true;
+                        ChangeToState(typeof(AIIdleState));
                     }
-                    else
-                    {
-                        ChangeToState(typeof(AIChaseState));
-                    }
+                }
+            }
+            else
+            {
+                if (currentState.GetType() != typeof(AIIdleState) || (!IdleAction.Active && currentState.GetType() == typeof(AIIdleState)))
+                {
+                    firstIdle = true;
+                    ChangeToState(typeof(AIIdleState));
                 }
             }
 

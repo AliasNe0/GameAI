@@ -19,17 +19,23 @@ namespace ASSIGNMENT4
             navigation = stateMachine.Navigation;
             navSurface = stateMachine.navSurface;
             followMovableAction = stateMachine.FollowMovableAction;
+            followMovableAction.SetFollowMovable(navigation, navSurface);
         }
 
         public override void OnEnter()
         {
-            followMovableAction.SetFollowMovable(detection, navigation, navSurface);
             followMovableAction.ResetFollowMovable(animator);
+            if (detection.Movable)
+            {
+                navigation.isStopped = false;
+                followMovableAction.FollowMovable(detection.Movable);
+            }
         }
 
         public override void OnExit()
         {
-
+            navigation.isStopped = true;
+            followMovableAction.Active = false;
         }
 
         public override void OnUpdate()

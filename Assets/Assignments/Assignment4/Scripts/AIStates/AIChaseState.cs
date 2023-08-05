@@ -14,22 +14,27 @@ namespace ASSIGNMENT4
 
         public override void OnStart()
         {
-            detection = stateMachine.Detection;
             animator = stateMachine.AIAnimator;
+            detection = stateMachine.Detection;
             navigation = stateMachine.Navigation;
-            navSurface = stateMachine.navSurface;
             chaseAction = stateMachine.ChaseAction;
-            chaseAction.SetChase(detection, navigation, navSurface);
+            chaseAction.SetChase(navigation);
         }
 
         public override void OnEnter()
         {
             chaseAction.ResetChase(animator);
+            if (detection.CollectableToPickUp)
+            {
+                navigation.isStopped = false;
+                chaseAction.Chase(detection.CollectableToPickUp);
+            }
         }
 
         public override void OnExit()
         {
-
+            chaseAction.Active = false;
+            navigation.isStopped = true;
         }
 
         public override void OnUpdate()

@@ -8,16 +8,13 @@ namespace ASSIGNMENT4
 {
     public class AIFollowMovableAction : MonoBehaviour
     {
-        public bool Active { get; private set; }
+        public bool Active = false;
 
-        AIDetection detection;
         NavMeshAgent navigation;
         NavMeshSurface navSurface;
-        Vector3 targetLastPosition;
 
-        public void SetFollowMovable(AIDetection AIdetection, NavMeshAgent agent, NavMeshSurface surface)
+        public void SetFollowMovable(NavMeshAgent agent, NavMeshSurface surface)
         {
-            detection = AIdetection;
             navigation = agent;
             navSurface = surface;
         }
@@ -25,8 +22,6 @@ namespace ASSIGNMENT4
         public void ResetFollowMovable(Animator animator)
         {
             Active = true;
-            navigation.isStopped = true;
-            detection.HasPathToMovable = false;
             animator.SetTrigger("Walk");
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Crouch");
@@ -34,27 +29,16 @@ namespace ASSIGNMENT4
 
         public void FollowMovable(GameObject target)
         {
-            if (!target) return;
-            if (navigation.isStopped || target.transform.position != targetLastPosition)
+            if (target.transform.position != navigation.destination)
             {
-                detection.HasPathToMovable = true;
-                targetLastPosition = target.transform.position;
                 navSurface.BuildNavMesh();
-                navigation.SetDestination(targetLastPosition);
+                navigation.SetDestination(target.transform.position);
                 navigation.isStopped = false;
             }
-            if (!navigation.hasPath)
+            if (navigation.pathStatus == NavMeshPathStatus.PathInvalid)
             {
-                detection.HasPathToMovable = false;
-            }
-        }
-
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Movable"))
-            {
-                Active = false;
                 navigation.isStopped = true;
+                Active = false;
             }
         }
     }
