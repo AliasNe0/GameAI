@@ -21,12 +21,11 @@ namespace ASSIGNMENT5
         {
             if (target == null)
             {
-                bullets.Stop();
+                if (bullets.isPlaying) bullets.Stop();
                 FindTarget();
             }
             else
             {
-                if (!bullets.isPlaying) bullets.Play();
                 RotateTurret();
             }
         }
@@ -36,15 +35,18 @@ namespace ASSIGNMENT5
             GameObject[] targets = GameObject.FindGameObjectsWithTag("Agent");
             if (targets.Length == 0) return;
             float minDistance = Mathf.Infinity;
+            GameObject closest = null;
             foreach (GameObject tar in targets)
             {
                 float distance = Vector3.Distance(tar.transform.position, transform.position);
                 if (distance <= range && distance < minDistance)
                 {
                     minDistance = distance;
-                    target = tar;
+                    closest = tar;
                 }
             }
+            target = closest;
+            bullets.Play();
         }
 
         void RotateTurret()
@@ -58,7 +60,7 @@ namespace ASSIGNMENT5
             {
                 float targetSpeed = 0f;
                 NavMeshAgent navigation = target.GetComponent<NavMeshAgent>();
-                if (!navigation.isStopped) targetSpeed = target.GetComponent<NavMeshAgent>().speed;
+                if (navigation && navigation.isOnNavMesh && !navigation.isStopped) targetSpeed = navigation.speed;
                 Vector3 direction = bullets.main.startSpeed.constant * Vector3.Normalize(target.transform.position - transform.position) + target.transform.forward * targetSpeed;
                 direction = new Vector3(direction.x, 0, direction.z);
                 transform.rotation = Quaternion.LookRotation(direction);
